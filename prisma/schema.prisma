@@ -15,9 +15,53 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
+  id        String       @id @default(uuid())
+  username  String       @unique
   password  String
-  avatarUrl String?
-  createdAt DateTime @default(now())
+  avatarUrl String?      @map("avatar_url")
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  role      UserRole     @default(USER)
+  notes     TravelNote[]
+}
+
+model TravelNote {
+  id           String     @id @default(uuid())
+  title        String
+  content      String
+  status       NoteStatus @default(PENDING)
+  rejectReason String?    @map("reject_reason")
+  author       User       @relation(fields: [authorId], references: [id])
+  authorId     String     @map("author_id")
+  media        Media[]
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+}
+
+model Media {
+  id           String     @id @default(uuid())
+  type         MediaType
+  url          String
+  thumbnailUrl String?    @map("thumbnail_url")
+  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)
+  travelNoteId String     @map("travel_note_id")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+}
+
+enum NoteStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum UserRole {
+  USER
+  REVIEWER
+  ADMIN
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
 }

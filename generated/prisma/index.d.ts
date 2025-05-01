@@ -18,6 +18,59 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model TravelNote
+ * 
+ */
+export type TravelNote = $Result.DefaultSelection<Prisma.$TravelNotePayload>
+/**
+ * Model Media
+ * 
+ */
+export type Media = $Result.DefaultSelection<Prisma.$MediaPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const NoteStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+export type NoteStatus = (typeof NoteStatus)[keyof typeof NoteStatus]
+
+
+export const UserRole: {
+  USER: 'USER',
+  REVIEWER: 'REVIEWER',
+  ADMIN: 'ADMIN'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const MediaType: {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO'
+};
+
+export type MediaType = (typeof MediaType)[keyof typeof MediaType]
+
+}
+
+export type NoteStatus = $Enums.NoteStatus
+
+export const NoteStatus: typeof $Enums.NoteStatus
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
+
+export type MediaType = $Enums.MediaType
+
+export const MediaType: typeof $Enums.MediaType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -153,6 +206,26 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.travelNote`: Exposes CRUD operations for the **TravelNote** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TravelNotes
+    * const travelNotes = await prisma.travelNote.findMany()
+    * ```
+    */
+  get travelNote(): Prisma.TravelNoteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.media`: Exposes CRUD operations for the **Media** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Media
+    * const media = await prisma.media.findMany()
+    * ```
+    */
+  get media(): Prisma.MediaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -593,7 +666,9 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    User: 'User'
+    User: 'User',
+    TravelNote: 'TravelNote',
+    Media: 'Media'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -612,7 +687,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user"
+      modelProps: "user" | "travelNote" | "media"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -679,6 +754,138 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      TravelNote: {
+        payload: Prisma.$TravelNotePayload<ExtArgs>
+        fields: Prisma.TravelNoteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TravelNoteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TravelNoteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          findFirst: {
+            args: Prisma.TravelNoteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TravelNoteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          findMany: {
+            args: Prisma.TravelNoteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>[]
+          }
+          create: {
+            args: Prisma.TravelNoteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          createMany: {
+            args: Prisma.TravelNoteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.TravelNoteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          update: {
+            args: Prisma.TravelNoteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          deleteMany: {
+            args: Prisma.TravelNoteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TravelNoteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TravelNoteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TravelNotePayload>
+          }
+          aggregate: {
+            args: Prisma.TravelNoteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTravelNote>
+          }
+          groupBy: {
+            args: Prisma.TravelNoteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TravelNoteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TravelNoteCountArgs<ExtArgs>
+            result: $Utils.Optional<TravelNoteCountAggregateOutputType> | number
+          }
+        }
+      }
+      Media: {
+        payload: Prisma.$MediaPayload<ExtArgs>
+        fields: Prisma.MediaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          findMany: {
+            args: Prisma.MediaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>[]
+          }
+          create: {
+            args: Prisma.MediaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          createMany: {
+            args: Prisma.MediaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.MediaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          update: {
+            args: Prisma.MediaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MediaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMedia>
+          }
+          groupBy: {
+            args: Prisma.MediaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaCountAggregateOutputType> | number
           }
         }
       }
@@ -767,6 +974,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    travelNote?: TravelNoteOmit
+    media?: MediaOmit
   }
 
   /* Types for Logging */
@@ -856,6 +1065,67 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    notes: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notes?: boolean | UserCountOutputTypeCountNotesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TravelNoteWhereInput
+  }
+
+
+  /**
+   * Count Type TravelNoteCountOutputType
+   */
+
+  export type TravelNoteCountOutputType = {
+    media: number
+  }
+
+  export type TravelNoteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    media?: boolean | TravelNoteCountOutputTypeCountMediaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TravelNoteCountOutputType without action
+   */
+  export type TravelNoteCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNoteCountOutputType
+     */
+    select?: TravelNoteCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TravelNoteCountOutputType without action
+   */
+  export type TravelNoteCountOutputTypeCountMediaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaWhereInput
+  }
+
 
   /**
    * Models
@@ -867,34 +1137,28 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
 
-  export type UserAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type UserMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     username: string | null
     password: string | null
     avatarUrl: string | null
     createdAt: Date | null
+    updatedAt: Date | null
+    role: $Enums.UserRole | null
   }
 
   export type UserMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     username: string | null
     password: string | null
     avatarUrl: string | null
     createdAt: Date | null
+    updatedAt: Date | null
+    role: $Enums.UserRole | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -903,17 +1167,11 @@ export namespace Prisma {
     password: number
     avatarUrl: number
     createdAt: number
+    updatedAt: number
+    role: number
     _all: number
   }
 
-
-  export type UserAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    id?: true
-  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -921,6 +1179,8 @@ export namespace Prisma {
     password?: true
     avatarUrl?: true
     createdAt?: true
+    updatedAt?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -929,6 +1189,8 @@ export namespace Prisma {
     password?: true
     avatarUrl?: true
     createdAt?: true
+    updatedAt?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -937,6 +1199,8 @@ export namespace Prisma {
     password?: true
     avatarUrl?: true
     createdAt?: true
+    updatedAt?: true
+    role?: true
     _all?: true
   }
 
@@ -978,18 +1242,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1020,21 +1272,19 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
 
   export type UserGroupByOutputType = {
-    id: number
+    id: string
     username: string
     password: string
     avatarUrl: string | null
     createdAt: Date
+    updatedAt: Date
+    role: $Enums.UserRole
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1059,6 +1309,10 @@ export namespace Prisma {
     password?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
+    role?: boolean
+    notes?: boolean | User$notesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
 
@@ -1069,19 +1323,29 @@ export namespace Prisma {
     password?: boolean
     avatarUrl?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
+    role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "avatarUrl" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "avatarUrl" | "createdAt" | "updatedAt" | "role", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notes?: boolean | User$notesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      notes: Prisma.$TravelNotePayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       username: string
       password: string
       avatarUrl: string | null
       createdAt: Date
+      updatedAt: Date
+      role: $Enums.UserRole
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1422,6 +1686,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    notes<T extends User$notesArgs<ExtArgs> = {}>(args?: Subset<T, User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1451,11 +1716,13 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'Int'>
+    readonly id: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly avatarUrl: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly role: FieldRef<"User", 'UserRole'>
   }
     
 
@@ -1472,6 +1739,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1491,6 +1762,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1508,6 +1783,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1557,6 +1836,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1605,6 +1888,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1648,6 +1935,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -1676,6 +1967,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -1717,6 +2012,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -1743,6 +2042,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -1763,6 +2066,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.notes
+   */
+  export type User$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    where?: TravelNoteWhereInput
+    orderBy?: TravelNoteOrderByWithRelationInput | TravelNoteOrderByWithRelationInput[]
+    cursor?: TravelNoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TravelNoteScalarFieldEnum | TravelNoteScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1774,6 +2101,1953 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TravelNote
+   */
+
+  export type AggregateTravelNote = {
+    _count: TravelNoteCountAggregateOutputType | null
+    _min: TravelNoteMinAggregateOutputType | null
+    _max: TravelNoteMaxAggregateOutputType | null
+  }
+
+  export type TravelNoteMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    content: string | null
+    status: $Enums.NoteStatus | null
+    rejectReason: string | null
+    authorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TravelNoteMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    content: string | null
+    status: $Enums.NoteStatus | null
+    rejectReason: string | null
+    authorId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TravelNoteCountAggregateOutputType = {
+    id: number
+    title: number
+    content: number
+    status: number
+    rejectReason: number
+    authorId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TravelNoteMinAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    status?: true
+    rejectReason?: true
+    authorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TravelNoteMaxAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    status?: true
+    rejectReason?: true
+    authorId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TravelNoteCountAggregateInputType = {
+    id?: true
+    title?: true
+    content?: true
+    status?: true
+    rejectReason?: true
+    authorId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TravelNoteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TravelNote to aggregate.
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TravelNotes to fetch.
+     */
+    orderBy?: TravelNoteOrderByWithRelationInput | TravelNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TravelNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TravelNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TravelNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TravelNotes
+    **/
+    _count?: true | TravelNoteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TravelNoteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TravelNoteMaxAggregateInputType
+  }
+
+  export type GetTravelNoteAggregateType<T extends TravelNoteAggregateArgs> = {
+        [P in keyof T & keyof AggregateTravelNote]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTravelNote[P]>
+      : GetScalarType<T[P], AggregateTravelNote[P]>
+  }
+
+
+
+
+  export type TravelNoteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TravelNoteWhereInput
+    orderBy?: TravelNoteOrderByWithAggregationInput | TravelNoteOrderByWithAggregationInput[]
+    by: TravelNoteScalarFieldEnum[] | TravelNoteScalarFieldEnum
+    having?: TravelNoteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TravelNoteCountAggregateInputType | true
+    _min?: TravelNoteMinAggregateInputType
+    _max?: TravelNoteMaxAggregateInputType
+  }
+
+  export type TravelNoteGroupByOutputType = {
+    id: string
+    title: string
+    content: string
+    status: $Enums.NoteStatus
+    rejectReason: string | null
+    authorId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: TravelNoteCountAggregateOutputType | null
+    _min: TravelNoteMinAggregateOutputType | null
+    _max: TravelNoteMaxAggregateOutputType | null
+  }
+
+  type GetTravelNoteGroupByPayload<T extends TravelNoteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TravelNoteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TravelNoteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TravelNoteGroupByOutputType[P]>
+            : GetScalarType<T[P], TravelNoteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TravelNoteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    status?: boolean
+    rejectReason?: boolean
+    authorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | TravelNote$mediaArgs<ExtArgs>
+    _count?: boolean | TravelNoteCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["travelNote"]>
+
+
+
+  export type TravelNoteSelectScalar = {
+    id?: boolean
+    title?: boolean
+    content?: boolean
+    status?: boolean
+    rejectReason?: boolean
+    authorId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TravelNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "status" | "rejectReason" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["travelNote"]>
+  export type TravelNoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    media?: boolean | TravelNote$mediaArgs<ExtArgs>
+    _count?: boolean | TravelNoteCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $TravelNotePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TravelNote"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs>
+      media: Prisma.$MediaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      content: string
+      status: $Enums.NoteStatus
+      rejectReason: string | null
+      authorId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["travelNote"]>
+    composites: {}
+  }
+
+  type TravelNoteGetPayload<S extends boolean | null | undefined | TravelNoteDefaultArgs> = $Result.GetResult<Prisma.$TravelNotePayload, S>
+
+  type TravelNoteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TravelNoteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TravelNoteCountAggregateInputType | true
+    }
+
+  export interface TravelNoteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TravelNote'], meta: { name: 'TravelNote' } }
+    /**
+     * Find zero or one TravelNote that matches the filter.
+     * @param {TravelNoteFindUniqueArgs} args - Arguments to find a TravelNote
+     * @example
+     * // Get one TravelNote
+     * const travelNote = await prisma.travelNote.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TravelNoteFindUniqueArgs>(args: SelectSubset<T, TravelNoteFindUniqueArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TravelNote that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TravelNoteFindUniqueOrThrowArgs} args - Arguments to find a TravelNote
+     * @example
+     * // Get one TravelNote
+     * const travelNote = await prisma.travelNote.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TravelNoteFindUniqueOrThrowArgs>(args: SelectSubset<T, TravelNoteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TravelNote that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteFindFirstArgs} args - Arguments to find a TravelNote
+     * @example
+     * // Get one TravelNote
+     * const travelNote = await prisma.travelNote.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TravelNoteFindFirstArgs>(args?: SelectSubset<T, TravelNoteFindFirstArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TravelNote that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteFindFirstOrThrowArgs} args - Arguments to find a TravelNote
+     * @example
+     * // Get one TravelNote
+     * const travelNote = await prisma.travelNote.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TravelNoteFindFirstOrThrowArgs>(args?: SelectSubset<T, TravelNoteFindFirstOrThrowArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TravelNotes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TravelNotes
+     * const travelNotes = await prisma.travelNote.findMany()
+     * 
+     * // Get first 10 TravelNotes
+     * const travelNotes = await prisma.travelNote.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const travelNoteWithIdOnly = await prisma.travelNote.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TravelNoteFindManyArgs>(args?: SelectSubset<T, TravelNoteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TravelNote.
+     * @param {TravelNoteCreateArgs} args - Arguments to create a TravelNote.
+     * @example
+     * // Create one TravelNote
+     * const TravelNote = await prisma.travelNote.create({
+     *   data: {
+     *     // ... data to create a TravelNote
+     *   }
+     * })
+     * 
+     */
+    create<T extends TravelNoteCreateArgs>(args: SelectSubset<T, TravelNoteCreateArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TravelNotes.
+     * @param {TravelNoteCreateManyArgs} args - Arguments to create many TravelNotes.
+     * @example
+     * // Create many TravelNotes
+     * const travelNote = await prisma.travelNote.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TravelNoteCreateManyArgs>(args?: SelectSubset<T, TravelNoteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a TravelNote.
+     * @param {TravelNoteDeleteArgs} args - Arguments to delete one TravelNote.
+     * @example
+     * // Delete one TravelNote
+     * const TravelNote = await prisma.travelNote.delete({
+     *   where: {
+     *     // ... filter to delete one TravelNote
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TravelNoteDeleteArgs>(args: SelectSubset<T, TravelNoteDeleteArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TravelNote.
+     * @param {TravelNoteUpdateArgs} args - Arguments to update one TravelNote.
+     * @example
+     * // Update one TravelNote
+     * const travelNote = await prisma.travelNote.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TravelNoteUpdateArgs>(args: SelectSubset<T, TravelNoteUpdateArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TravelNotes.
+     * @param {TravelNoteDeleteManyArgs} args - Arguments to filter TravelNotes to delete.
+     * @example
+     * // Delete a few TravelNotes
+     * const { count } = await prisma.travelNote.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TravelNoteDeleteManyArgs>(args?: SelectSubset<T, TravelNoteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TravelNotes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TravelNotes
+     * const travelNote = await prisma.travelNote.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TravelNoteUpdateManyArgs>(args: SelectSubset<T, TravelNoteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one TravelNote.
+     * @param {TravelNoteUpsertArgs} args - Arguments to update or create a TravelNote.
+     * @example
+     * // Update or create a TravelNote
+     * const travelNote = await prisma.travelNote.upsert({
+     *   create: {
+     *     // ... data to create a TravelNote
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TravelNote we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TravelNoteUpsertArgs>(args: SelectSubset<T, TravelNoteUpsertArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TravelNotes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteCountArgs} args - Arguments to filter TravelNotes to count.
+     * @example
+     * // Count the number of TravelNotes
+     * const count = await prisma.travelNote.count({
+     *   where: {
+     *     // ... the filter for the TravelNotes we want to count
+     *   }
+     * })
+    **/
+    count<T extends TravelNoteCountArgs>(
+      args?: Subset<T, TravelNoteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TravelNoteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TravelNote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TravelNoteAggregateArgs>(args: Subset<T, TravelNoteAggregateArgs>): Prisma.PrismaPromise<GetTravelNoteAggregateType<T>>
+
+    /**
+     * Group by TravelNote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TravelNoteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TravelNoteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TravelNoteGroupByArgs['orderBy'] }
+        : { orderBy?: TravelNoteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TravelNoteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTravelNoteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TravelNote model
+   */
+  readonly fields: TravelNoteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TravelNote.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TravelNoteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    media<T extends TravelNote$mediaArgs<ExtArgs> = {}>(args?: Subset<T, TravelNote$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TravelNote model
+   */
+  interface TravelNoteFieldRefs {
+    readonly id: FieldRef<"TravelNote", 'String'>
+    readonly title: FieldRef<"TravelNote", 'String'>
+    readonly content: FieldRef<"TravelNote", 'String'>
+    readonly status: FieldRef<"TravelNote", 'NoteStatus'>
+    readonly rejectReason: FieldRef<"TravelNote", 'String'>
+    readonly authorId: FieldRef<"TravelNote", 'String'>
+    readonly createdAt: FieldRef<"TravelNote", 'DateTime'>
+    readonly updatedAt: FieldRef<"TravelNote", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TravelNote findUnique
+   */
+  export type TravelNoteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which TravelNote to fetch.
+     */
+    where: TravelNoteWhereUniqueInput
+  }
+
+  /**
+   * TravelNote findUniqueOrThrow
+   */
+  export type TravelNoteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which TravelNote to fetch.
+     */
+    where: TravelNoteWhereUniqueInput
+  }
+
+  /**
+   * TravelNote findFirst
+   */
+  export type TravelNoteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which TravelNote to fetch.
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TravelNotes to fetch.
+     */
+    orderBy?: TravelNoteOrderByWithRelationInput | TravelNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TravelNotes.
+     */
+    cursor?: TravelNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TravelNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TravelNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TravelNotes.
+     */
+    distinct?: TravelNoteScalarFieldEnum | TravelNoteScalarFieldEnum[]
+  }
+
+  /**
+   * TravelNote findFirstOrThrow
+   */
+  export type TravelNoteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which TravelNote to fetch.
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TravelNotes to fetch.
+     */
+    orderBy?: TravelNoteOrderByWithRelationInput | TravelNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TravelNotes.
+     */
+    cursor?: TravelNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TravelNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TravelNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TravelNotes.
+     */
+    distinct?: TravelNoteScalarFieldEnum | TravelNoteScalarFieldEnum[]
+  }
+
+  /**
+   * TravelNote findMany
+   */
+  export type TravelNoteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which TravelNotes to fetch.
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TravelNotes to fetch.
+     */
+    orderBy?: TravelNoteOrderByWithRelationInput | TravelNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TravelNotes.
+     */
+    cursor?: TravelNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TravelNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TravelNotes.
+     */
+    skip?: number
+    distinct?: TravelNoteScalarFieldEnum | TravelNoteScalarFieldEnum[]
+  }
+
+  /**
+   * TravelNote create
+   */
+  export type TravelNoteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TravelNote.
+     */
+    data: XOR<TravelNoteCreateInput, TravelNoteUncheckedCreateInput>
+  }
+
+  /**
+   * TravelNote createMany
+   */
+  export type TravelNoteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TravelNotes.
+     */
+    data: TravelNoteCreateManyInput | TravelNoteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TravelNote update
+   */
+  export type TravelNoteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TravelNote.
+     */
+    data: XOR<TravelNoteUpdateInput, TravelNoteUncheckedUpdateInput>
+    /**
+     * Choose, which TravelNote to update.
+     */
+    where: TravelNoteWhereUniqueInput
+  }
+
+  /**
+   * TravelNote updateMany
+   */
+  export type TravelNoteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TravelNotes.
+     */
+    data: XOR<TravelNoteUpdateManyMutationInput, TravelNoteUncheckedUpdateManyInput>
+    /**
+     * Filter which TravelNotes to update
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * Limit how many TravelNotes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TravelNote upsert
+   */
+  export type TravelNoteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TravelNote to update in case it exists.
+     */
+    where: TravelNoteWhereUniqueInput
+    /**
+     * In case the TravelNote found by the `where` argument doesn't exist, create a new TravelNote with this data.
+     */
+    create: XOR<TravelNoteCreateInput, TravelNoteUncheckedCreateInput>
+    /**
+     * In case the TravelNote was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TravelNoteUpdateInput, TravelNoteUncheckedUpdateInput>
+  }
+
+  /**
+   * TravelNote delete
+   */
+  export type TravelNoteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+    /**
+     * Filter which TravelNote to delete.
+     */
+    where: TravelNoteWhereUniqueInput
+  }
+
+  /**
+   * TravelNote deleteMany
+   */
+  export type TravelNoteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TravelNotes to delete
+     */
+    where?: TravelNoteWhereInput
+    /**
+     * Limit how many TravelNotes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TravelNote.media
+   */
+  export type TravelNote$mediaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    where?: MediaWhereInput
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    cursor?: MediaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaScalarFieldEnum | MediaScalarFieldEnum[]
+  }
+
+  /**
+   * TravelNote without action
+   */
+  export type TravelNoteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TravelNote
+     */
+    select?: TravelNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TravelNote
+     */
+    omit?: TravelNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TravelNoteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Media
+   */
+
+  export type AggregateMedia = {
+    _count: MediaCountAggregateOutputType | null
+    _min: MediaMinAggregateOutputType | null
+    _max: MediaMaxAggregateOutputType | null
+  }
+
+  export type MediaMinAggregateOutputType = {
+    id: string | null
+    type: $Enums.MediaType | null
+    url: string | null
+    thumbnailUrl: string | null
+    travelNoteId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaMaxAggregateOutputType = {
+    id: string | null
+    type: $Enums.MediaType | null
+    url: string | null
+    thumbnailUrl: string | null
+    travelNoteId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaCountAggregateOutputType = {
+    id: number
+    type: number
+    url: number
+    thumbnailUrl: number
+    travelNoteId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaMinAggregateInputType = {
+    id?: true
+    type?: true
+    url?: true
+    thumbnailUrl?: true
+    travelNoteId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaMaxAggregateInputType = {
+    id?: true
+    type?: true
+    url?: true
+    thumbnailUrl?: true
+    travelNoteId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaCountAggregateInputType = {
+    id?: true
+    type?: true
+    url?: true
+    thumbnailUrl?: true
+    travelNoteId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Media to aggregate.
+     */
+    where?: MediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Media to fetch.
+     */
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Media from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Media.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Media
+    **/
+    _count?: true | MediaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaMaxAggregateInputType
+  }
+
+  export type GetMediaAggregateType<T extends MediaAggregateArgs> = {
+        [P in keyof T & keyof AggregateMedia]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMedia[P]>
+      : GetScalarType<T[P], AggregateMedia[P]>
+  }
+
+
+
+
+  export type MediaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaWhereInput
+    orderBy?: MediaOrderByWithAggregationInput | MediaOrderByWithAggregationInput[]
+    by: MediaScalarFieldEnum[] | MediaScalarFieldEnum
+    having?: MediaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaCountAggregateInputType | true
+    _min?: MediaMinAggregateInputType
+    _max?: MediaMaxAggregateInputType
+  }
+
+  export type MediaGroupByOutputType = {
+    id: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl: string | null
+    travelNoteId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MediaCountAggregateOutputType | null
+    _min: MediaMinAggregateOutputType | null
+    _max: MediaMaxAggregateOutputType | null
+  }
+
+  type GetMediaGroupByPayload<T extends MediaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    url?: boolean
+    thumbnailUrl?: boolean
+    travelNoteId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    travelNote?: boolean | TravelNoteDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["media"]>
+
+
+
+  export type MediaSelectScalar = {
+    id?: boolean
+    type?: boolean
+    url?: boolean
+    thumbnailUrl?: boolean
+    travelNoteId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "url" | "thumbnailUrl" | "travelNoteId" | "createdAt" | "updatedAt", ExtArgs["result"]["media"]>
+  export type MediaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    travelNote?: boolean | TravelNoteDefaultArgs<ExtArgs>
+  }
+
+  export type $MediaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Media"
+    objects: {
+      travelNote: Prisma.$TravelNotePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: $Enums.MediaType
+      url: string
+      thumbnailUrl: string | null
+      travelNoteId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["media"]>
+    composites: {}
+  }
+
+  type MediaGetPayload<S extends boolean | null | undefined | MediaDefaultArgs> = $Result.GetResult<Prisma.$MediaPayload, S>
+
+  type MediaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaCountAggregateInputType | true
+    }
+
+  export interface MediaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Media'], meta: { name: 'Media' } }
+    /**
+     * Find zero or one Media that matches the filter.
+     * @param {MediaFindUniqueArgs} args - Arguments to find a Media
+     * @example
+     * // Get one Media
+     * const media = await prisma.media.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaFindUniqueArgs>(args: SelectSubset<T, MediaFindUniqueArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Media that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaFindUniqueOrThrowArgs} args - Arguments to find a Media
+     * @example
+     * // Get one Media
+     * const media = await prisma.media.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Media that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaFindFirstArgs} args - Arguments to find a Media
+     * @example
+     * // Get one Media
+     * const media = await prisma.media.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaFindFirstArgs>(args?: SelectSubset<T, MediaFindFirstArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Media that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaFindFirstOrThrowArgs} args - Arguments to find a Media
+     * @example
+     * // Get one Media
+     * const media = await prisma.media.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Media that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Media
+     * const media = await prisma.media.findMany()
+     * 
+     * // Get first 10 Media
+     * const media = await prisma.media.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaWithIdOnly = await prisma.media.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaFindManyArgs>(args?: SelectSubset<T, MediaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Media.
+     * @param {MediaCreateArgs} args - Arguments to create a Media.
+     * @example
+     * // Create one Media
+     * const Media = await prisma.media.create({
+     *   data: {
+     *     // ... data to create a Media
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaCreateArgs>(args: SelectSubset<T, MediaCreateArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Media.
+     * @param {MediaCreateManyArgs} args - Arguments to create many Media.
+     * @example
+     * // Create many Media
+     * const media = await prisma.media.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaCreateManyArgs>(args?: SelectSubset<T, MediaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Media.
+     * @param {MediaDeleteArgs} args - Arguments to delete one Media.
+     * @example
+     * // Delete one Media
+     * const Media = await prisma.media.delete({
+     *   where: {
+     *     // ... filter to delete one Media
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaDeleteArgs>(args: SelectSubset<T, MediaDeleteArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Media.
+     * @param {MediaUpdateArgs} args - Arguments to update one Media.
+     * @example
+     * // Update one Media
+     * const media = await prisma.media.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaUpdateArgs>(args: SelectSubset<T, MediaUpdateArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Media.
+     * @param {MediaDeleteManyArgs} args - Arguments to filter Media to delete.
+     * @example
+     * // Delete a few Media
+     * const { count } = await prisma.media.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaDeleteManyArgs>(args?: SelectSubset<T, MediaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Media.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Media
+     * const media = await prisma.media.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaUpdateManyArgs>(args: SelectSubset<T, MediaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Media.
+     * @param {MediaUpsertArgs} args - Arguments to update or create a Media.
+     * @example
+     * // Update or create a Media
+     * const media = await prisma.media.upsert({
+     *   create: {
+     *     // ... data to create a Media
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Media we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaUpsertArgs>(args: SelectSubset<T, MediaUpsertArgs<ExtArgs>>): Prisma__MediaClient<$Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Media.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaCountArgs} args - Arguments to filter Media to count.
+     * @example
+     * // Count the number of Media
+     * const count = await prisma.media.count({
+     *   where: {
+     *     // ... the filter for the Media we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaCountArgs>(
+      args?: Subset<T, MediaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Media.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaAggregateArgs>(args: Subset<T, MediaAggregateArgs>): Prisma.PrismaPromise<GetMediaAggregateType<T>>
+
+    /**
+     * Group by Media.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaGroupByArgs['orderBy'] }
+        : { orderBy?: MediaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Media model
+   */
+  readonly fields: MediaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Media.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    travelNote<T extends TravelNoteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TravelNoteDefaultArgs<ExtArgs>>): Prisma__TravelNoteClient<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Media model
+   */
+  interface MediaFieldRefs {
+    readonly id: FieldRef<"Media", 'String'>
+    readonly type: FieldRef<"Media", 'MediaType'>
+    readonly url: FieldRef<"Media", 'String'>
+    readonly thumbnailUrl: FieldRef<"Media", 'String'>
+    readonly travelNoteId: FieldRef<"Media", 'String'>
+    readonly createdAt: FieldRef<"Media", 'DateTime'>
+    readonly updatedAt: FieldRef<"Media", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Media findUnique
+   */
+  export type MediaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter, which Media to fetch.
+     */
+    where: MediaWhereUniqueInput
+  }
+
+  /**
+   * Media findUniqueOrThrow
+   */
+  export type MediaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter, which Media to fetch.
+     */
+    where: MediaWhereUniqueInput
+  }
+
+  /**
+   * Media findFirst
+   */
+  export type MediaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter, which Media to fetch.
+     */
+    where?: MediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Media to fetch.
+     */
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Media.
+     */
+    cursor?: MediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Media from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Media.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Media.
+     */
+    distinct?: MediaScalarFieldEnum | MediaScalarFieldEnum[]
+  }
+
+  /**
+   * Media findFirstOrThrow
+   */
+  export type MediaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter, which Media to fetch.
+     */
+    where?: MediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Media to fetch.
+     */
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Media.
+     */
+    cursor?: MediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Media from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Media.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Media.
+     */
+    distinct?: MediaScalarFieldEnum | MediaScalarFieldEnum[]
+  }
+
+  /**
+   * Media findMany
+   */
+  export type MediaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter, which Media to fetch.
+     */
+    where?: MediaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Media to fetch.
+     */
+    orderBy?: MediaOrderByWithRelationInput | MediaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Media.
+     */
+    cursor?: MediaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Media from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Media.
+     */
+    skip?: number
+    distinct?: MediaScalarFieldEnum | MediaScalarFieldEnum[]
+  }
+
+  /**
+   * Media create
+   */
+  export type MediaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Media.
+     */
+    data: XOR<MediaCreateInput, MediaUncheckedCreateInput>
+  }
+
+  /**
+   * Media createMany
+   */
+  export type MediaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Media.
+     */
+    data: MediaCreateManyInput | MediaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Media update
+   */
+  export type MediaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Media.
+     */
+    data: XOR<MediaUpdateInput, MediaUncheckedUpdateInput>
+    /**
+     * Choose, which Media to update.
+     */
+    where: MediaWhereUniqueInput
+  }
+
+  /**
+   * Media updateMany
+   */
+  export type MediaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Media.
+     */
+    data: XOR<MediaUpdateManyMutationInput, MediaUncheckedUpdateManyInput>
+    /**
+     * Filter which Media to update
+     */
+    where?: MediaWhereInput
+    /**
+     * Limit how many Media to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Media upsert
+   */
+  export type MediaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Media to update in case it exists.
+     */
+    where: MediaWhereUniqueInput
+    /**
+     * In case the Media found by the `where` argument doesn't exist, create a new Media with this data.
+     */
+    create: XOR<MediaCreateInput, MediaUncheckedCreateInput>
+    /**
+     * In case the Media was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaUpdateInput, MediaUncheckedUpdateInput>
+  }
+
+  /**
+   * Media delete
+   */
+  export type MediaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
+    /**
+     * Filter which Media to delete.
+     */
+    where: MediaWhereUniqueInput
+  }
+
+  /**
+   * Media deleteMany
+   */
+  export type MediaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Media to delete
+     */
+    where?: MediaWhereInput
+    /**
+     * Limit how many Media to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Media without action
+   */
+  export type MediaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Media
+     */
+    select?: MediaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Media
+     */
+    omit?: MediaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaInclude<ExtArgs> | null
   }
 
 
@@ -1796,10 +4070,39 @@ export namespace Prisma {
     username: 'username',
     password: 'password',
     avatarUrl: 'avatarUrl',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const TravelNoteScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    content: 'content',
+    status: 'status',
+    rejectReason: 'rejectReason',
+    authorId: 'authorId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TravelNoteScalarFieldEnum = (typeof TravelNoteScalarFieldEnum)[keyof typeof TravelNoteScalarFieldEnum]
+
+
+  export const MediaScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    url: 'url',
+    thumbnailUrl: 'thumbnailUrl',
+    travelNoteId: 'travelNoteId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1819,6 +4122,7 @@ export namespace Prisma {
 
 
   export const UserOrderByRelevanceFieldEnum: {
+    id: 'id',
     username: 'username',
     password: 'password',
     avatarUrl: 'avatarUrl'
@@ -1827,16 +4131,30 @@ export namespace Prisma {
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
 
+  export const TravelNoteOrderByRelevanceFieldEnum: {
+    id: 'id',
+    title: 'title',
+    content: 'content',
+    rejectReason: 'rejectReason',
+    authorId: 'authorId'
+  };
+
+  export type TravelNoteOrderByRelevanceFieldEnum = (typeof TravelNoteOrderByRelevanceFieldEnum)[keyof typeof TravelNoteOrderByRelevanceFieldEnum]
+
+
+  export const MediaOrderByRelevanceFieldEnum: {
+    id: 'id',
+    url: 'url',
+    thumbnailUrl: 'thumbnailUrl',
+    travelNoteId: 'travelNoteId'
+  };
+
+  export type MediaOrderByRelevanceFieldEnum = (typeof MediaOrderByRelevanceFieldEnum)[keyof typeof MediaOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
 
 
   /**
@@ -1854,9 +4172,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'UserRole'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'NoteStatus'
+   */
+  export type EnumNoteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NoteStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaType'
+   */
+  export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
   /**
    * Deep Input Types
@@ -1867,11 +4206,14 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: IntFilter<"User"> | number
+    id?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    notes?: TravelNoteListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -1880,11 +4222,14 @@ export namespace Prisma {
     password?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    role?: SortOrder
+    notes?: TravelNoteOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     username?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -1892,6 +4237,9 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     avatarUrl?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    notes?: TravelNoteListRelationFilter
   }, "id" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -1900,86 +4248,387 @@ export namespace Prisma {
     password?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"User"> | number
+    id?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  }
+
+  export type TravelNoteWhereInput = {
+    AND?: TravelNoteWhereInput | TravelNoteWhereInput[]
+    OR?: TravelNoteWhereInput[]
+    NOT?: TravelNoteWhereInput | TravelNoteWhereInput[]
+    id?: StringFilter<"TravelNote"> | string
+    title?: StringFilter<"TravelNote"> | string
+    content?: StringFilter<"TravelNote"> | string
+    status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
+    rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    authorId?: StringFilter<"TravelNote"> | string
+    createdAt?: DateTimeFilter<"TravelNote"> | Date | string
+    updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    media?: MediaListRelationFilter
+  }
+
+  export type TravelNoteOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    rejectReason?: SortOrderInput | SortOrder
+    authorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    author?: UserOrderByWithRelationInput
+    media?: MediaOrderByRelationAggregateInput
+    _relevance?: TravelNoteOrderByRelevanceInput
+  }
+
+  export type TravelNoteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TravelNoteWhereInput | TravelNoteWhereInput[]
+    OR?: TravelNoteWhereInput[]
+    NOT?: TravelNoteWhereInput | TravelNoteWhereInput[]
+    title?: StringFilter<"TravelNote"> | string
+    content?: StringFilter<"TravelNote"> | string
+    status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
+    rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    authorId?: StringFilter<"TravelNote"> | string
+    createdAt?: DateTimeFilter<"TravelNote"> | Date | string
+    updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    media?: MediaListRelationFilter
+  }, "id">
+
+  export type TravelNoteOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    rejectReason?: SortOrderInput | SortOrder
+    authorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TravelNoteCountOrderByAggregateInput
+    _max?: TravelNoteMaxOrderByAggregateInput
+    _min?: TravelNoteMinOrderByAggregateInput
+  }
+
+  export type TravelNoteScalarWhereWithAggregatesInput = {
+    AND?: TravelNoteScalarWhereWithAggregatesInput | TravelNoteScalarWhereWithAggregatesInput[]
+    OR?: TravelNoteScalarWhereWithAggregatesInput[]
+    NOT?: TravelNoteScalarWhereWithAggregatesInput | TravelNoteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TravelNote"> | string
+    title?: StringWithAggregatesFilter<"TravelNote"> | string
+    content?: StringWithAggregatesFilter<"TravelNote"> | string
+    status?: EnumNoteStatusWithAggregatesFilter<"TravelNote"> | $Enums.NoteStatus
+    rejectReason?: StringNullableWithAggregatesFilter<"TravelNote"> | string | null
+    authorId?: StringWithAggregatesFilter<"TravelNote"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"TravelNote"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TravelNote"> | Date | string
+  }
+
+  export type MediaWhereInput = {
+    AND?: MediaWhereInput | MediaWhereInput[]
+    OR?: MediaWhereInput[]
+    NOT?: MediaWhereInput | MediaWhereInput[]
+    id?: StringFilter<"Media"> | string
+    type?: EnumMediaTypeFilter<"Media"> | $Enums.MediaType
+    url?: StringFilter<"Media"> | string
+    thumbnailUrl?: StringNullableFilter<"Media"> | string | null
+    travelNoteId?: StringFilter<"Media"> | string
+    createdAt?: DateTimeFilter<"Media"> | Date | string
+    updatedAt?: DateTimeFilter<"Media"> | Date | string
+    travelNote?: XOR<TravelNoteScalarRelationFilter, TravelNoteWhereInput>
+  }
+
+  export type MediaOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    url?: SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    travelNoteId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    travelNote?: TravelNoteOrderByWithRelationInput
+    _relevance?: MediaOrderByRelevanceInput
+  }
+
+  export type MediaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaWhereInput | MediaWhereInput[]
+    OR?: MediaWhereInput[]
+    NOT?: MediaWhereInput | MediaWhereInput[]
+    type?: EnumMediaTypeFilter<"Media"> | $Enums.MediaType
+    url?: StringFilter<"Media"> | string
+    thumbnailUrl?: StringNullableFilter<"Media"> | string | null
+    travelNoteId?: StringFilter<"Media"> | string
+    createdAt?: DateTimeFilter<"Media"> | Date | string
+    updatedAt?: DateTimeFilter<"Media"> | Date | string
+    travelNote?: XOR<TravelNoteScalarRelationFilter, TravelNoteWhereInput>
+  }, "id">
+
+  export type MediaOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    url?: SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    travelNoteId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaCountOrderByAggregateInput
+    _max?: MediaMaxOrderByAggregateInput
+    _min?: MediaMinOrderByAggregateInput
+  }
+
+  export type MediaScalarWhereWithAggregatesInput = {
+    AND?: MediaScalarWhereWithAggregatesInput | MediaScalarWhereWithAggregatesInput[]
+    OR?: MediaScalarWhereWithAggregatesInput[]
+    NOT?: MediaScalarWhereWithAggregatesInput | MediaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Media"> | string
+    type?: EnumMediaTypeWithAggregatesFilter<"Media"> | $Enums.MediaType
+    url?: StringWithAggregatesFilter<"Media"> | string
+    thumbnailUrl?: StringNullableWithAggregatesFilter<"Media"> | string | null
+    travelNoteId?: StringWithAggregatesFilter<"Media"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Media"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Media"> | Date | string
   }
 
   export type UserCreateInput = {
+    id?: string
     username: string
     password: string
     avatarUrl?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+    notes?: TravelNoteCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateInput = {
-    id?: number
+    id?: string
     username: string
     password: string
     avatarUrl?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+    notes?: TravelNoteUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    notes?: TravelNoteUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    notes?: TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
-    id?: number
+    id?: string
     username: string
     password: string
     avatarUrl?: string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
   }
 
   export type UserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
   export type UserUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type TravelNoteCreateInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author: UserCreateNestedOneWithoutNotesInput
+    media?: MediaCreateNestedManyWithoutTravelNoteInput
+  }
+
+  export type TravelNoteUncheckedCreateInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    authorId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    media?: MediaUncheckedCreateNestedManyWithoutTravelNoteInput
+  }
+
+  export type TravelNoteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutNotesNestedInput
+    media?: MediaUpdateManyWithoutTravelNoteNestedInput
+  }
+
+  export type TravelNoteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: MediaUncheckedUpdateManyWithoutTravelNoteNestedInput
+  }
+
+  export type TravelNoteCreateManyInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    authorId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TravelNoteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TravelNoteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaCreateInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    travelNote: TravelNoteCreateNestedOneWithoutMediaInput
+  }
+
+  export type MediaUncheckedCreateInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    travelNoteId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    travelNote?: TravelNoteUpdateOneRequiredWithoutMediaNestedInput
+  }
+
+  export type MediaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    travelNoteId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaCreateManyInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    travelNoteId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    travelNoteId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2023,9 +4672,26 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
+  export type TravelNoteListRelationFilter = {
+    every?: TravelNoteWhereInput
+    some?: TravelNoteWhereInput
+    none?: TravelNoteWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type TravelNoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserOrderByRelevanceInput = {
@@ -2040,10 +4706,8 @@ export namespace Prisma {
     password?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    id?: SortOrder
+    updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -2052,6 +4716,8 @@ export namespace Prisma {
     password?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -2060,26 +4726,8 @@ export namespace Prisma {
     password?: SortOrder
     avatarUrl?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    updatedAt?: SortOrder
+    role?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2132,6 +4780,159 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type EnumNoteStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.NoteStatus | EnumNoteStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NoteStatus[]
+    notIn?: $Enums.NoteStatus[]
+    not?: NestedEnumNoteStatusFilter<$PrismaModel> | $Enums.NoteStatus
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type MediaListRelationFilter = {
+    every?: MediaWhereInput
+    some?: MediaWhereInput
+    none?: MediaWhereInput
+  }
+
+  export type MediaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TravelNoteOrderByRelevanceInput = {
+    fields: TravelNoteOrderByRelevanceFieldEnum | TravelNoteOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type TravelNoteCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    rejectReason?: SortOrder
+    authorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TravelNoteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    rejectReason?: SortOrder
+    authorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TravelNoteMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    rejectReason?: SortOrder
+    authorId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumNoteStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NoteStatus | EnumNoteStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NoteStatus[]
+    notIn?: $Enums.NoteStatus[]
+    not?: NestedEnumNoteStatusWithAggregatesFilter<$PrismaModel> | $Enums.NoteStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNoteStatusFilter<$PrismaModel>
+    _max?: NestedEnumNoteStatusFilter<$PrismaModel>
+  }
+
+  export type EnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[]
+    notIn?: $Enums.MediaType[]
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
+  }
+
+  export type TravelNoteScalarRelationFilter = {
+    is?: TravelNoteWhereInput
+    isNot?: TravelNoteWhereInput
+  }
+
+  export type MediaOrderByRelevanceInput = {
+    fields: MediaOrderByRelevanceFieldEnum | MediaOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type MediaCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    url?: SortOrder
+    thumbnailUrl?: SortOrder
+    travelNoteId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    url?: SortOrder
+    thumbnailUrl?: SortOrder
+    travelNoteId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    url?: SortOrder
+    thumbnailUrl?: SortOrder
+    travelNoteId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[]
+    notIn?: $Enums.MediaType[]
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type TravelNoteCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
+    createMany?: TravelNoteCreateManyAuthorInputEnvelope
+    connect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+  }
+
+  export type TravelNoteUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
+    createMany?: TravelNoteCreateManyAuthorInputEnvelope
+    connect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2144,23 +4945,114 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+  export type TravelNoteUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
+    upsert?: TravelNoteUpsertWithWhereUniqueWithoutAuthorInput | TravelNoteUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: TravelNoteCreateManyAuthorInputEnvelope
+    set?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    disconnect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    delete?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    connect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    update?: TravelNoteUpdateWithWhereUniqueWithoutAuthorInput | TravelNoteUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: TravelNoteUpdateManyWithWhereWithoutAuthorInput | TravelNoteUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: TravelNoteScalarWhereInput | TravelNoteScalarWhereInput[]
+  }
+
+  export type TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
+    upsert?: TravelNoteUpsertWithWhereUniqueWithoutAuthorInput | TravelNoteUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: TravelNoteCreateManyAuthorInputEnvelope
+    set?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    disconnect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    delete?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    connect?: TravelNoteWhereUniqueInput | TravelNoteWhereUniqueInput[]
+    update?: TravelNoteUpdateWithWhereUniqueWithoutAuthorInput | TravelNoteUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: TravelNoteUpdateManyWithWhereWithoutAuthorInput | TravelNoteUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: TravelNoteScalarWhereInput | TravelNoteScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutNotesInput = {
+    create?: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MediaCreateNestedManyWithoutTravelNoteInput = {
+    create?: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput> | MediaCreateWithoutTravelNoteInput[] | MediaUncheckedCreateWithoutTravelNoteInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutTravelNoteInput | MediaCreateOrConnectWithoutTravelNoteInput[]
+    createMany?: MediaCreateManyTravelNoteInputEnvelope
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+  }
+
+  export type MediaUncheckedCreateNestedManyWithoutTravelNoteInput = {
+    create?: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput> | MediaCreateWithoutTravelNoteInput[] | MediaUncheckedCreateWithoutTravelNoteInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutTravelNoteInput | MediaCreateOrConnectWithoutTravelNoteInput[]
+    createMany?: MediaCreateManyTravelNoteInputEnvelope
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+  }
+
+  export type EnumNoteStatusFieldUpdateOperationsInput = {
+    set?: $Enums.NoteStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutNotesNestedInput = {
+    create?: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotesInput
+    upsert?: UserUpsertWithoutNotesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotesInput, UserUpdateWithoutNotesInput>, UserUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type MediaUpdateManyWithoutTravelNoteNestedInput = {
+    create?: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput> | MediaCreateWithoutTravelNoteInput[] | MediaUncheckedCreateWithoutTravelNoteInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutTravelNoteInput | MediaCreateOrConnectWithoutTravelNoteInput[]
+    upsert?: MediaUpsertWithWhereUniqueWithoutTravelNoteInput | MediaUpsertWithWhereUniqueWithoutTravelNoteInput[]
+    createMany?: MediaCreateManyTravelNoteInputEnvelope
+    set?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    disconnect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    delete?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    update?: MediaUpdateWithWhereUniqueWithoutTravelNoteInput | MediaUpdateWithWhereUniqueWithoutTravelNoteInput[]
+    updateMany?: MediaUpdateManyWithWhereWithoutTravelNoteInput | MediaUpdateManyWithWhereWithoutTravelNoteInput[]
+    deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
+  }
+
+  export type MediaUncheckedUpdateManyWithoutTravelNoteNestedInput = {
+    create?: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput> | MediaCreateWithoutTravelNoteInput[] | MediaUncheckedCreateWithoutTravelNoteInput[]
+    connectOrCreate?: MediaCreateOrConnectWithoutTravelNoteInput | MediaCreateOrConnectWithoutTravelNoteInput[]
+    upsert?: MediaUpsertWithWhereUniqueWithoutTravelNoteInput | MediaUpsertWithWhereUniqueWithoutTravelNoteInput[]
+    createMany?: MediaCreateManyTravelNoteInputEnvelope
+    set?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    disconnect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    delete?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    connect?: MediaWhereUniqueInput | MediaWhereUniqueInput[]
+    update?: MediaUpdateWithWhereUniqueWithoutTravelNoteInput | MediaUpdateWithWhereUniqueWithoutTravelNoteInput[]
+    updateMany?: MediaUpdateManyWithWhereWithoutTravelNoteInput | MediaUpdateManyWithWhereWithoutTravelNoteInput[]
+    deleteMany?: MediaScalarWhereInput | MediaScalarWhereInput[]
+  }
+
+  export type TravelNoteCreateNestedOneWithoutMediaInput = {
+    create?: XOR<TravelNoteCreateWithoutMediaInput, TravelNoteUncheckedCreateWithoutMediaInput>
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutMediaInput
+    connect?: TravelNoteWhereUniqueInput
+  }
+
+  export type EnumMediaTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MediaType
+  }
+
+  export type TravelNoteUpdateOneRequiredWithoutMediaNestedInput = {
+    create?: XOR<TravelNoteCreateWithoutMediaInput, TravelNoteUncheckedCreateWithoutMediaInput>
+    connectOrCreate?: TravelNoteCreateOrConnectWithoutMediaInput
+    upsert?: TravelNoteUpsertWithoutMediaInput
+    connect?: TravelNoteWhereUniqueInput
+    update?: XOR<XOR<TravelNoteUpdateToOneWithWhereWithoutMediaInput, TravelNoteUpdateWithoutMediaInput>, TravelNoteUncheckedUpdateWithoutMediaInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -2204,31 +5096,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -2247,6 +5119,17 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -2290,6 +5173,363 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNoteStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.NoteStatus | EnumNoteStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NoteStatus[]
+    notIn?: $Enums.NoteStatus[]
+    not?: NestedEnumNoteStatusFilter<$PrismaModel> | $Enums.NoteStatus
+  }
+
+  export type NestedEnumNoteStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NoteStatus | EnumNoteStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NoteStatus[]
+    notIn?: $Enums.NoteStatus[]
+    not?: NestedEnumNoteStatusWithAggregatesFilter<$PrismaModel> | $Enums.NoteStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNoteStatusFilter<$PrismaModel>
+    _max?: NestedEnumNoteStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[]
+    notIn?: $Enums.MediaType[]
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
+  }
+
+  export type NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[]
+    notIn?: $Enums.MediaType[]
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type TravelNoteCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    media?: MediaCreateNestedManyWithoutTravelNoteInput
+  }
+
+  export type TravelNoteUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    media?: MediaUncheckedCreateNestedManyWithoutTravelNoteInput
+  }
+
+  export type TravelNoteCreateOrConnectWithoutAuthorInput = {
+    where: TravelNoteWhereUniqueInput
+    create: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type TravelNoteCreateManyAuthorInputEnvelope = {
+    data: TravelNoteCreateManyAuthorInput | TravelNoteCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TravelNoteUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: TravelNoteWhereUniqueInput
+    update: XOR<TravelNoteUpdateWithoutAuthorInput, TravelNoteUncheckedUpdateWithoutAuthorInput>
+    create: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type TravelNoteUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: TravelNoteWhereUniqueInput
+    data: XOR<TravelNoteUpdateWithoutAuthorInput, TravelNoteUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type TravelNoteUpdateManyWithWhereWithoutAuthorInput = {
+    where: TravelNoteScalarWhereInput
+    data: XOR<TravelNoteUpdateManyMutationInput, TravelNoteUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type TravelNoteScalarWhereInput = {
+    AND?: TravelNoteScalarWhereInput | TravelNoteScalarWhereInput[]
+    OR?: TravelNoteScalarWhereInput[]
+    NOT?: TravelNoteScalarWhereInput | TravelNoteScalarWhereInput[]
+    id?: StringFilter<"TravelNote"> | string
+    title?: StringFilter<"TravelNote"> | string
+    content?: StringFilter<"TravelNote"> | string
+    status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
+    rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    authorId?: StringFilter<"TravelNote"> | string
+    createdAt?: DateTimeFilter<"TravelNote"> | Date | string
+    updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
+  }
+
+  export type UserCreateWithoutNotesInput = {
+    id?: string
+    username: string
+    password: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+  }
+
+  export type UserUncheckedCreateWithoutNotesInput = {
+    id?: string
+    username: string
+    password: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+  }
+
+  export type UserCreateOrConnectWithoutNotesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+  }
+
+  export type MediaCreateWithoutTravelNoteInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaUncheckedCreateWithoutTravelNoteInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaCreateOrConnectWithoutTravelNoteInput = {
+    where: MediaWhereUniqueInput
+    create: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput>
+  }
+
+  export type MediaCreateManyTravelNoteInputEnvelope = {
+    data: MediaCreateManyTravelNoteInput | MediaCreateManyTravelNoteInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutNotesInput = {
+    update: XOR<UserUpdateWithoutNotesInput, UserUncheckedUpdateWithoutNotesInput>
+    create: XOR<UserCreateWithoutNotesInput, UserUncheckedCreateWithoutNotesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNotesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNotesInput, UserUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type UserUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  }
+
+  export type UserUncheckedUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  }
+
+  export type MediaUpsertWithWhereUniqueWithoutTravelNoteInput = {
+    where: MediaWhereUniqueInput
+    update: XOR<MediaUpdateWithoutTravelNoteInput, MediaUncheckedUpdateWithoutTravelNoteInput>
+    create: XOR<MediaCreateWithoutTravelNoteInput, MediaUncheckedCreateWithoutTravelNoteInput>
+  }
+
+  export type MediaUpdateWithWhereUniqueWithoutTravelNoteInput = {
+    where: MediaWhereUniqueInput
+    data: XOR<MediaUpdateWithoutTravelNoteInput, MediaUncheckedUpdateWithoutTravelNoteInput>
+  }
+
+  export type MediaUpdateManyWithWhereWithoutTravelNoteInput = {
+    where: MediaScalarWhereInput
+    data: XOR<MediaUpdateManyMutationInput, MediaUncheckedUpdateManyWithoutTravelNoteInput>
+  }
+
+  export type MediaScalarWhereInput = {
+    AND?: MediaScalarWhereInput | MediaScalarWhereInput[]
+    OR?: MediaScalarWhereInput[]
+    NOT?: MediaScalarWhereInput | MediaScalarWhereInput[]
+    id?: StringFilter<"Media"> | string
+    type?: EnumMediaTypeFilter<"Media"> | $Enums.MediaType
+    url?: StringFilter<"Media"> | string
+    thumbnailUrl?: StringNullableFilter<"Media"> | string | null
+    travelNoteId?: StringFilter<"Media"> | string
+    createdAt?: DateTimeFilter<"Media"> | Date | string
+    updatedAt?: DateTimeFilter<"Media"> | Date | string
+  }
+
+  export type TravelNoteCreateWithoutMediaInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author: UserCreateNestedOneWithoutNotesInput
+  }
+
+  export type TravelNoteUncheckedCreateWithoutMediaInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    authorId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TravelNoteCreateOrConnectWithoutMediaInput = {
+    where: TravelNoteWhereUniqueInput
+    create: XOR<TravelNoteCreateWithoutMediaInput, TravelNoteUncheckedCreateWithoutMediaInput>
+  }
+
+  export type TravelNoteUpsertWithoutMediaInput = {
+    update: XOR<TravelNoteUpdateWithoutMediaInput, TravelNoteUncheckedUpdateWithoutMediaInput>
+    create: XOR<TravelNoteCreateWithoutMediaInput, TravelNoteUncheckedCreateWithoutMediaInput>
+    where?: TravelNoteWhereInput
+  }
+
+  export type TravelNoteUpdateToOneWithWhereWithoutMediaInput = {
+    where?: TravelNoteWhereInput
+    data: XOR<TravelNoteUpdateWithoutMediaInput, TravelNoteUncheckedUpdateWithoutMediaInput>
+  }
+
+  export type TravelNoteUpdateWithoutMediaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutNotesNestedInput
+  }
+
+  export type TravelNoteUncheckedUpdateWithoutMediaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TravelNoteCreateManyAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    status?: $Enums.NoteStatus
+    rejectReason?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TravelNoteUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: MediaUpdateManyWithoutTravelNoteNestedInput
+  }
+
+  export type TravelNoteUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    media?: MediaUncheckedUpdateManyWithoutTravelNoteNestedInput
+  }
+
+  export type TravelNoteUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
+    rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaCreateManyTravelNoteInput = {
+    id?: string
+    type: $Enums.MediaType
+    url: string
+    thumbnailUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaUpdateWithoutTravelNoteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaUncheckedUpdateWithoutTravelNoteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaUncheckedUpdateManyWithoutTravelNoteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    url?: StringFieldUpdateOperationsInput | string
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

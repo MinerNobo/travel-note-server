@@ -125,7 +125,30 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   avatarUrl: 'avatarUrl',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  role: 'role'
+};
+
+exports.Prisma.TravelNoteScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  status: 'status',
+  rejectReason: 'rejectReason',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  url: 'url',
+  thumbnailUrl: 'thumbnailUrl',
+  travelNoteId: 'travelNoteId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -139,14 +162,47 @@ exports.Prisma.NullsOrder = {
 };
 
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  id: 'id',
   username: 'username',
   password: 'password',
   avatarUrl: 'avatarUrl'
 };
 
+exports.Prisma.TravelNoteOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  rejectReason: 'rejectReason',
+  authorId: 'authorId'
+};
+
+exports.Prisma.MediaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  url: 'url',
+  thumbnailUrl: 'thumbnailUrl',
+  travelNoteId: 'travelNoteId'
+};
+exports.UserRole = exports.$Enums.UserRole = {
+  USER: 'USER',
+  REVIEWER: 'REVIEWER',
+  ADMIN: 'ADMIN'
+};
+
+exports.NoteStatus = exports.$Enums.NoteStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+exports.MediaType = exports.$Enums.MediaType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  TravelNote: 'TravelNote',
+  Media: 'Media'
 };
 
 /**

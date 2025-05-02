@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { Prisma, TravelNote } from 'generated/prisma';
 import { NOTE_STATUS } from 'src/contants';
 import { PrismaService } from 'src/prisma.service';
+import { CreateNoteDto } from './dto/create-note.dto';
 
 @Injectable()
 export class NotesService {
@@ -70,8 +71,17 @@ export class NotesService {
         select: {
           id: true,
           title: true,
+          content: true,
           status: true,
           rejectReason: true,
+          media: {
+            select: {
+              id: true,
+              type: true,
+              url: true,
+              thumbnailUrl: true,
+            },
+          },
           createdAt: true,
           updatedAt: true,
         },
@@ -86,22 +96,110 @@ export class NotesService {
     };
   }
 
-  async updateNotes(id: string, data: Partial<TravelNote>) {
+  async createNote(userId: string, data: CreateNoteDto) {
+    const videoCount = data.media.filter((m) => m.type === 'VIDEO').length;
+    if (videoCount > 1) {
+      throw new BadRequestException('只能上传一个视频');
+    }
+
+    const imageCount = data.media.filter((m) => m.type === 'IMAGE').length;
+    if (imageCount === 0) {
+      throw new BadRequestException('至少需要上传一张图片');
+    }
+
+    return this.prisma.travelNote.create({
+      data: {
+        title: data.title,
+        content: data.content,
+        status: NOTE_STATUS.PENDING,
+        author: {
+          connect: { id: userId },
+        },
+        media: {
+          create: data.media.map((media) => ({
+            type: media.type,
+            url: media.url,
+            thumbnailUrl: media.thumbnailUrl,
+          })),
+        },
+      },
+      include: {
+        media: true,
+      },
+    });
+  }
+
+  async updateNote(id: string, userId: string, data: Partial<CreateNoteDto>) {
+    const note = await this.prisma.travelNote.findFirst({
+      where: { id, authorId: userId },
+    });
+
+    if (!note) {
+      throw new BadRequestException('游记不存在或无权限修改');
+    }
+
+    if (note.status !== NOTE_STATUS.PENDING) {
+      throw new BadRequestException('当前状态不允许修改');
+    }
+
+    if (data.media) {
+      const videoCount = data.media.filter((m) => m.type === 'VIDEO').length;
+      if (videoCount > 1) {
+        throw new BadRequestException('只能上传一个视频');
+      }
+
+      const imageCount = data.media.filter((m) => m.type === 'IMAGE').length;
+      if (imageCount === 0) {
+        throw new BadRequestException('至少需要上传一张图片');
+      }
+    }
+
+    const updateData: Prisma.TravelNoteUpdateInput = {
+      status: NOTE_STATUS.PENDING,
+    };
+
+    if (data.title) {
+      updateData.title = data.title;
+    }
+
+    if (data.content) {
+      updateData.content = data.content;
+    }
+
+    if (data.media) {
+      await this.prisma.media.deleteMany({
+        where: { travelNoteId: id },
+      });
+
+      updateData.media = {
+        create: data.media.map((media) => ({
+          type: media.type,
+          url: media.url,
+          thumbnailUrl: media.thumbnailUrl,
+        })),
+      };
+    }
+
     return this.prisma.travelNote.update({
       where: { id },
-      data,
+      data: updateData,
+      include: {
+        media: true,
+      },
     });
   }
 
-  async deleteNote(id: string) {
+  async deleteNote(id: string, userId: string) {
+    const note = await this.prisma.travelNote.findFirst({
+      where: { id, authorId: userId },
+    });
+
+    if (!note) {
+      throw new BadRequestException('游记不存在或无权限删除');
+    }
+
     return this.prisma.travelNote.delete({
       where: { id },
-    });
-  }
-
-  async createNote(data: Prisma.TravelNoteCreateInput) {
-    return this.prisma.travelNote.create({
-      data,
     });
   }
 }

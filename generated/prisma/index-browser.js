@@ -151,6 +151,13 @@ exports.Prisma.MediaScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TokenBlacklistScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -182,6 +189,11 @@ exports.Prisma.MediaOrderByRelevanceFieldEnum = {
   thumbnailUrl: 'thumbnailUrl',
   travelNoteId: 'travelNoteId'
 };
+
+exports.Prisma.TokenBlacklistOrderByRelevanceFieldEnum = {
+  id: 'id',
+  token: 'token'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   REVIEWER: 'REVIEWER',
@@ -202,7 +214,8 @@ exports.MediaType = exports.$Enums.MediaType = {
 exports.Prisma.ModelName = {
   User: 'User',
   TravelNote: 'TravelNote',
-  Media: 'Media'
+  Media: 'Media',
+  TokenBlacklist: 'TokenBlacklist'
 };
 
 /**

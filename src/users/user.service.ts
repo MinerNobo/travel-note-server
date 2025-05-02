@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { User, UserRole } from 'generated/prisma';
 
 type UserWithoutPassword = Omit<User, 'password'>;

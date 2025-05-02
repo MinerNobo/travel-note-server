@@ -19,16 +19,25 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(request: any, payload: any) {
-    const token = request.headers.authorization?.split(' ')[1];
-    if (!token) {
-      throw new UnauthorizedException('未提供token');
-    }
+    try {
+      const token = request.headers.authorization?.split(' ')[1];
 
-    const isBlacklisted = await this.authService.isTokenBlacklisted(token);
-    if (isBlacklisted) {
-      throw new UnauthorizedException('token已失效');
-    }
+      if (!token) {
+        throw new UnauthorizedException('未提供token');
+      }
 
-    return { userId: payload.sub, username: payload.username };
+      const isBlacklisted = await this.authService.isTokenBlacklisted(token);
+
+      if (isBlacklisted) {
+        throw new UnauthorizedException('token已失效');
+      }
+
+      return { userId: payload.sub, username: payload.username };
+    } catch (error) {
+      if (error instanceof UnauthorizedException) {
+        throw error;
+      }
+      throw new UnauthorizedException('无效的token');
+    }
   }
 }

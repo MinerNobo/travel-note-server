@@ -153,7 +153,7 @@ exports.Prisma.MediaScalarFieldEnum = {
 
 exports.Prisma.TokenBlacklistScalarFieldEnum = {
   id: 'id',
-  token: 'token',
+  tokenHash: 'tokenHash',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt'
 };
@@ -192,7 +192,7 @@ exports.Prisma.MediaOrderByRelevanceFieldEnum = {
 
 exports.Prisma.TokenBlacklistOrderByRelevanceFieldEnum = {
   id: 'id',
-  token: 'token'
+  tokenHash: 'tokenHash'
 };
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',

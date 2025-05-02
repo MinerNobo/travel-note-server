@@ -4146,21 +4146,21 @@ export namespace Prisma {
 
   export type TokenBlacklistMinAggregateOutputType = {
     id: string | null
-    token: string | null
+    tokenHash: string | null
     expiresAt: Date | null
     createdAt: Date | null
   }
 
   export type TokenBlacklistMaxAggregateOutputType = {
     id: string | null
-    token: string | null
+    tokenHash: string | null
     expiresAt: Date | null
     createdAt: Date | null
   }
 
   export type TokenBlacklistCountAggregateOutputType = {
     id: number
-    token: number
+    tokenHash: number
     expiresAt: number
     createdAt: number
     _all: number
@@ -4169,21 +4169,21 @@ export namespace Prisma {
 
   export type TokenBlacklistMinAggregateInputType = {
     id?: true
-    token?: true
+    tokenHash?: true
     expiresAt?: true
     createdAt?: true
   }
 
   export type TokenBlacklistMaxAggregateInputType = {
     id?: true
-    token?: true
+    tokenHash?: true
     expiresAt?: true
     createdAt?: true
   }
 
   export type TokenBlacklistCountAggregateInputType = {
     id?: true
-    token?: true
+    tokenHash?: true
     expiresAt?: true
     createdAt?: true
     _all?: true
@@ -4263,7 +4263,7 @@ export namespace Prisma {
 
   export type TokenBlacklistGroupByOutputType = {
     id: string
-    token: string
+    tokenHash: string
     expiresAt: Date
     createdAt: Date
     _count: TokenBlacklistCountAggregateOutputType | null
@@ -4287,7 +4287,7 @@ export namespace Prisma {
 
   export type TokenBlacklistSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    token?: boolean
+    tokenHash?: boolean
     expiresAt?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["tokenBlacklist"]>
@@ -4296,19 +4296,19 @@ export namespace Prisma {
 
   export type TokenBlacklistSelectScalar = {
     id?: boolean
-    token?: boolean
+    tokenHash?: boolean
     expiresAt?: boolean
     createdAt?: boolean
   }
 
-  export type TokenBlacklistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "expiresAt" | "createdAt", ExtArgs["result"]["tokenBlacklist"]>
+  export type TokenBlacklistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tokenHash" | "expiresAt" | "createdAt", ExtArgs["result"]["tokenBlacklist"]>
 
   export type $TokenBlacklistPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TokenBlacklist"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      token: string
+      tokenHash: string
       expiresAt: Date
       createdAt: Date
     }, ExtArgs["result"]["tokenBlacklist"]>
@@ -4681,7 +4681,7 @@ export namespace Prisma {
    */
   interface TokenBlacklistFieldRefs {
     readonly id: FieldRef<"TokenBlacklist", 'String'>
-    readonly token: FieldRef<"TokenBlacklist", 'String'>
+    readonly tokenHash: FieldRef<"TokenBlacklist", 'String'>
     readonly expiresAt: FieldRef<"TokenBlacklist", 'DateTime'>
     readonly createdAt: FieldRef<"TokenBlacklist", 'DateTime'>
   }
@@ -5061,7 +5061,7 @@ export namespace Prisma {
 
   export const TokenBlacklistScalarFieldEnum: {
     id: 'id',
-    token: 'token',
+    tokenHash: 'tokenHash',
     expiresAt: 'expiresAt',
     createdAt: 'createdAt'
   };
@@ -5118,7 +5118,7 @@ export namespace Prisma {
 
   export const TokenBlacklistOrderByRelevanceFieldEnum: {
     id: 'id',
-    token: 'token'
+    tokenHash: 'tokenHash'
   };
 
   export type TokenBlacklistOrderByRelevanceFieldEnum = (typeof TokenBlacklistOrderByRelevanceFieldEnum)[keyof typeof TokenBlacklistOrderByRelevanceFieldEnum]
@@ -5385,14 +5385,14 @@ export namespace Prisma {
     OR?: TokenBlacklistWhereInput[]
     NOT?: TokenBlacklistWhereInput | TokenBlacklistWhereInput[]
     id?: StringFilter<"TokenBlacklist"> | string
-    token?: StringFilter<"TokenBlacklist"> | string
+    tokenHash?: StringFilter<"TokenBlacklist"> | string
     expiresAt?: DateTimeFilter<"TokenBlacklist"> | Date | string
     createdAt?: DateTimeFilter<"TokenBlacklist"> | Date | string
   }
 
   export type TokenBlacklistOrderByWithRelationInput = {
     id?: SortOrder
-    token?: SortOrder
+    tokenHash?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     _relevance?: TokenBlacklistOrderByRelevanceInput
@@ -5400,17 +5400,17 @@ export namespace Prisma {
 
   export type TokenBlacklistWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    token?: string
+    tokenHash?: string
     AND?: TokenBlacklistWhereInput | TokenBlacklistWhereInput[]
     OR?: TokenBlacklistWhereInput[]
     NOT?: TokenBlacklistWhereInput | TokenBlacklistWhereInput[]
     expiresAt?: DateTimeFilter<"TokenBlacklist"> | Date | string
     createdAt?: DateTimeFilter<"TokenBlacklist"> | Date | string
-  }, "id" | "token">
+  }, "id" | "tokenHash">
 
   export type TokenBlacklistOrderByWithAggregationInput = {
     id?: SortOrder
-    token?: SortOrder
+    tokenHash?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     _count?: TokenBlacklistCountOrderByAggregateInput
@@ -5423,7 +5423,7 @@ export namespace Prisma {
     OR?: TokenBlacklistScalarWhereWithAggregatesInput[]
     NOT?: TokenBlacklistScalarWhereWithAggregatesInput | TokenBlacklistScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"TokenBlacklist"> | string
-    token?: StringWithAggregatesFilter<"TokenBlacklist"> | string
+    tokenHash?: StringWithAggregatesFilter<"TokenBlacklist"> | string
     expiresAt?: DateTimeWithAggregatesFilter<"TokenBlacklist"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"TokenBlacklist"> | Date | string
   }
@@ -5653,49 +5653,49 @@ export namespace Prisma {
 
   export type TokenBlacklistCreateInput = {
     id?: string
-    token: string
+    tokenHash: string
     expiresAt: Date | string
     createdAt?: Date | string
   }
 
   export type TokenBlacklistUncheckedCreateInput = {
     id?: string
-    token: string
+    tokenHash: string
     expiresAt: Date | string
     createdAt?: Date | string
   }
 
   export type TokenBlacklistUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TokenBlacklistUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TokenBlacklistCreateManyInput = {
     id?: string
-    token: string
+    tokenHash: string
     expiresAt: Date | string
     createdAt?: Date | string
   }
 
   export type TokenBlacklistUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TokenBlacklistUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5996,21 +5996,21 @@ export namespace Prisma {
 
   export type TokenBlacklistCountOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
+    tokenHash?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
   }
 
   export type TokenBlacklistMaxOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
+    tokenHash?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
   }
 
   export type TokenBlacklistMinOrderByAggregateInput = {
     id?: SortOrder
-    token?: SortOrder
+    tokenHash?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
   }

@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { Prisma, TravelNote } from 'generated/prisma';
+import { Prisma, TravelNote, NoteStatus } from 'generated/prisma';
 import { NOTE_STATUS } from 'src/contants';
 import { PrismaService } from 'src/prisma.service';
 import { CreateNoteDto } from './dto/create-note.dto';
@@ -7,6 +7,64 @@ import { CreateNoteDto } from './dto/create-note.dto';
 @Injectable()
 export class NotesService {
   constructor(private prisma: PrismaService) {}
+
+  async getAllNotes(
+    page = 1,
+    pageSize = 10,
+    keyword = '',
+    status?: NoteStatus,
+  ) {
+    const where: Prisma.TravelNoteWhereInput = {
+      ...(status && { status }),
+      ...(keyword && {
+        OR: [
+          { title: { contains: keyword } },
+          { author: { username: { contains: keyword } } },
+        ],
+      }),
+    };
+
+    const [total, notes] = await this.prisma.$transaction([
+      this.prisma.travelNote.count({ where }),
+      this.prisma.travelNote.findMany({
+        where,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          status: true,
+          rejectReason: true,
+          media: {
+            select: {
+              id: true,
+              type: true,
+              url: true,
+              thumbnailUrl: true,
+            },
+          },
+          author: {
+            select: {
+              id: true,
+              username: true,
+              avatarUrl: true,
+            },
+          },
+          createdAt: true,
+          updatedAt: true,
+        },
+      }),
+    ]);
+
+    return {
+      total,
+      page,
+      pageSize,
+      data: notes,
+    };
+  }
 
   async getApprovedNotes(page = 1, pageSize = 10, keyword = '') {
     const where = {

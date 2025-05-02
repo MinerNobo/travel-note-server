@@ -7,12 +7,13 @@ import {
   Patch,
   Post,
   Query,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
-import { Prisma, TravelNote } from 'generated/prisma';
+import { NoteStatus, Prisma, TravelNote } from 'generated/prisma';
 import { CreateNoteDto } from './dto/create-note.dto';
-
-const CURRENT_USER_ID = 'cfaef6a7-2692-11f0-85ec-fa163eb50d7b';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('notes')
 export class NotesController {
@@ -23,44 +24,58 @@ export class NotesController {
     @Query('page') page = '1',
     @Query('pageSize') pageSize = '10',
     @Query('keyword') keyword = '',
+    @Query('status') status?: NoteStatus,
+  ) {
+    const pageNum = parseInt(page);
+    const pageSizeNum = parseInt(pageSize);
+    return this.notesService.getAllNotes(pageNum, pageSizeNum, keyword, status);
+  }
+
+  @Get('approved')
+  async getApprovedNotes(
+    @Query('page') page = '1',
+    @Query('pageSize') pageSize = '10',
+    @Query('keyword') keyword = '',
   ) {
     const pageNum = parseInt(page);
     const pageSizeNum = parseInt(pageSize);
     return this.notesService.getApprovedNotes(pageNum, pageSizeNum, keyword);
   }
 
-  @Get('user/:userId')
-  async getUserNotes(
-    @Param('userId') userId: string,
+  @UseGuards(JwtAuthGuard)
+  @Get('my')
+  async getMyNotes(
     @Query('page') page = '1',
     @Query('pageSize') pageSize = '10',
+    @Request() req,
   ) {
     const pageNum = parseInt(page);
     const pageSizeNum = parseInt(pageSize);
-    return this.notesService.getUserNotes(userId, pageNum, pageSizeNum);
+    return this.notesService.getUserNotes(req.user.id, pageNum, pageSizeNum);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   async updateNote(
     @Param('id') id: string,
     @Body() data: Partial<CreateNoteDto>,
+    @Request() req,
   ) {
-    // TODO: Get userId from authentication
-    const userId = CURRENT_USER_ID;
+    const userId = req.user.id;
     return this.notesService.updateNote(id, userId, data);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async deleteNote(@Param('id') id: string) {
-    // TODO: Get userId from authentication
-    const userId = CURRENT_USER_ID;
+  async deleteNote(@Param('id') id: string, @Request() req) {
+    const userId = req.user.id;
     return this.notesService.deleteNote(id, userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async createNote(@Body() data: CreateNoteDto) {
-    // TODO: Get userId from authentication
-    const userId = CURRENT_USER_ID;
+  async createNote(@Body() data: CreateNoteDto, @Request() req) {
+    const userId = req.user.id;
     return this.notesService.createNote(userId, data);
   }
 }

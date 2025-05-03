@@ -136,6 +136,7 @@ exports.Prisma.TravelNoteScalarFieldEnum = {
   content: 'content',
   status: 'status',
   rejectReason: 'rejectReason',
+  isDeleted: 'isDeleted',
   authorId: 'authorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

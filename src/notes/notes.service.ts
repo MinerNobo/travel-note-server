@@ -15,6 +15,7 @@ export class NotesService {
     status?: NoteStatus,
   ) {
     const where: Prisma.TravelNoteWhereInput = {
+      isDeleted: false,
       ...(status && { status }),
       ...(keyword && {
         OR: [

@@ -2207,6 +2207,7 @@ export namespace Prisma {
     content: string | null
     status: $Enums.NoteStatus | null
     rejectReason: string | null
+    isDeleted: boolean | null
     authorId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2218,6 +2219,7 @@ export namespace Prisma {
     content: string | null
     status: $Enums.NoteStatus | null
     rejectReason: string | null
+    isDeleted: boolean | null
     authorId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2229,6 +2231,7 @@ export namespace Prisma {
     content: number
     status: number
     rejectReason: number
+    isDeleted: number
     authorId: number
     createdAt: number
     updatedAt: number
@@ -2242,6 +2245,7 @@ export namespace Prisma {
     content?: true
     status?: true
     rejectReason?: true
+    isDeleted?: true
     authorId?: true
     createdAt?: true
     updatedAt?: true
@@ -2253,6 +2257,7 @@ export namespace Prisma {
     content?: true
     status?: true
     rejectReason?: true
+    isDeleted?: true
     authorId?: true
     createdAt?: true
     updatedAt?: true
@@ -2264,6 +2269,7 @@ export namespace Prisma {
     content?: true
     status?: true
     rejectReason?: true
+    isDeleted?: true
     authorId?: true
     createdAt?: true
     updatedAt?: true
@@ -2348,6 +2354,7 @@ export namespace Prisma {
     content: string
     status: $Enums.NoteStatus
     rejectReason: string | null
+    isDeleted: boolean
     authorId: string
     createdAt: Date
     updatedAt: Date
@@ -2376,6 +2383,7 @@ export namespace Prisma {
     content?: boolean
     status?: boolean
     rejectReason?: boolean
+    isDeleted?: boolean
     authorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2392,12 +2400,13 @@ export namespace Prisma {
     content?: boolean
     status?: boolean
     rejectReason?: boolean
+    isDeleted?: boolean
     authorId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TravelNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "status" | "rejectReason" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["travelNote"]>
+  export type TravelNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "status" | "rejectReason" | "isDeleted" | "authorId" | "createdAt" | "updatedAt", ExtArgs["result"]["travelNote"]>
   export type TravelNoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     media?: boolean | TravelNote$mediaArgs<ExtArgs>
@@ -2416,6 +2425,7 @@ export namespace Prisma {
       content: string
       status: $Enums.NoteStatus
       rejectReason: string | null
+      isDeleted: boolean
       authorId: string
       createdAt: Date
       updatedAt: Date
@@ -2795,6 +2805,7 @@ export namespace Prisma {
     readonly content: FieldRef<"TravelNote", 'String'>
     readonly status: FieldRef<"TravelNote", 'NoteStatus'>
     readonly rejectReason: FieldRef<"TravelNote", 'String'>
+    readonly isDeleted: FieldRef<"TravelNote", 'Boolean'>
     readonly authorId: FieldRef<"TravelNote", 'String'>
     readonly createdAt: FieldRef<"TravelNote", 'DateTime'>
     readonly updatedAt: FieldRef<"TravelNote", 'DateTime'>
@@ -5038,6 +5049,7 @@ export namespace Prisma {
     content: 'content',
     status: 'status',
     rejectReason: 'rejectReason',
+    isDeleted: 'isDeleted',
     authorId: 'authorId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -5158,6 +5170,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'MediaType'
    */
   export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
@@ -5249,6 +5268,7 @@ export namespace Prisma {
     content?: StringFilter<"TravelNote"> | string
     status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
     rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    isDeleted?: BoolFilter<"TravelNote"> | boolean
     authorId?: StringFilter<"TravelNote"> | string
     createdAt?: DateTimeFilter<"TravelNote"> | Date | string
     updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
@@ -5262,6 +5282,7 @@ export namespace Prisma {
     content?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrderInput | SortOrder
+    isDeleted?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5279,6 +5300,7 @@ export namespace Prisma {
     content?: StringFilter<"TravelNote"> | string
     status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
     rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    isDeleted?: BoolFilter<"TravelNote"> | boolean
     authorId?: StringFilter<"TravelNote"> | string
     createdAt?: DateTimeFilter<"TravelNote"> | Date | string
     updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
@@ -5292,6 +5314,7 @@ export namespace Prisma {
     content?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrderInput | SortOrder
+    isDeleted?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5309,6 +5332,7 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"TravelNote"> | string
     status?: EnumNoteStatusWithAggregatesFilter<"TravelNote"> | $Enums.NoteStatus
     rejectReason?: StringNullableWithAggregatesFilter<"TravelNote"> | string | null
+    isDeleted?: BoolWithAggregatesFilter<"TravelNote"> | boolean
     authorId?: StringWithAggregatesFilter<"TravelNote"> | string
     createdAt?: DateTimeWithAggregatesFilter<"TravelNote"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TravelNote"> | Date | string
@@ -5508,6 +5532,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutNotesInput
@@ -5520,6 +5545,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     authorId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5532,6 +5558,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutNotesNestedInput
@@ -5544,6 +5571,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5556,6 +5584,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     authorId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5567,6 +5596,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5577,6 +5607,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5866,6 +5897,11 @@ export namespace Prisma {
     not?: NestedEnumNoteStatusFilter<$PrismaModel> | $Enums.NoteStatus
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -5893,6 +5929,7 @@ export namespace Prisma {
     content?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
+    isDeleted?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5904,6 +5941,7 @@ export namespace Prisma {
     content?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
+    isDeleted?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5915,6 +5953,7 @@ export namespace Prisma {
     content?: SortOrder
     status?: SortOrder
     rejectReason?: SortOrder
+    isDeleted?: SortOrder
     authorId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5928,6 +5967,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumNoteStatusFilter<$PrismaModel>
     _max?: NestedEnumNoteStatusFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumMediaTypeFilter<$PrismaModel = never> = {
@@ -6095,6 +6142,10 @@ export namespace Prisma {
 
   export type EnumNoteStatusFieldUpdateOperationsInput = {
     set?: $Enums.NoteStatus
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutNotesNestedInput = {
@@ -6288,6 +6339,11 @@ export namespace Prisma {
     not?: NestedEnumNoteStatusFilter<$PrismaModel> | $Enums.NoteStatus
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumNoteStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.NoteStatus | EnumNoteStatusFieldRefInput<$PrismaModel>
     in?: $Enums.NoteStatus[]
@@ -6296,6 +6352,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumNoteStatusFilter<$PrismaModel>
     _max?: NestedEnumNoteStatusFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumMediaTypeFilter<$PrismaModel = never> = {
@@ -6321,6 +6385,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     media?: MediaCreateNestedManyWithoutTravelNoteInput
@@ -6332,6 +6397,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     media?: MediaUncheckedCreateNestedManyWithoutTravelNoteInput
@@ -6372,6 +6438,7 @@ export namespace Prisma {
     content?: StringFilter<"TravelNote"> | string
     status?: EnumNoteStatusFilter<"TravelNote"> | $Enums.NoteStatus
     rejectReason?: StringNullableFilter<"TravelNote"> | string | null
+    isDeleted?: BoolFilter<"TravelNote"> | boolean
     authorId?: StringFilter<"TravelNote"> | string
     createdAt?: DateTimeFilter<"TravelNote"> | Date | string
     updatedAt?: DateTimeFilter<"TravelNote"> | Date | string
@@ -6496,6 +6563,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     author: UserCreateNestedOneWithoutNotesInput
@@ -6507,6 +6575,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     authorId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6534,6 +6603,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutNotesNestedInput
@@ -6545,6 +6615,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6556,6 +6627,7 @@ export namespace Prisma {
     content: string
     status?: $Enums.NoteStatus
     rejectReason?: string | null
+    isDeleted?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6566,6 +6638,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     media?: MediaUpdateManyWithoutTravelNoteNestedInput
@@ -6577,6 +6650,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     media?: MediaUncheckedUpdateManyWithoutTravelNoteNestedInput
@@ -6588,6 +6662,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     status?: EnumNoteStatusFieldUpdateOperationsInput | $Enums.NoteStatus
     rejectReason?: NullableStringFieldUpdateOperationsInput | string | null
+    isDeleted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

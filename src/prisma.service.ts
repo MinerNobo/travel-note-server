@@ -19,9 +19,8 @@ export class PrismaService
   private async initializeAdminAccounts() {
     const adminUsername = 'admin';
     const reviewerUsername = 'reviewer';
-    const defaultPassword = '123456'; // 默认密码，建议在首次登录后修改
+    const defaultPassword = '123456';
 
-    // 检查管理员账号是否存在
     const adminExists = await this.user.findUnique({
       where: { username: adminUsername },
     });
@@ -38,7 +37,6 @@ export class PrismaService
       console.log('Admin account created successfully');
     }
 
-    // 检查审核员账号是否存在
     const reviewerExists = await this.user.findUnique({
       where: { username: reviewerUsername },
     });

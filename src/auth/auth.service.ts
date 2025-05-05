@@ -71,7 +71,7 @@ export class AuthService {
         throw new UnauthorizedException('无效的token');
       }
 
-      const expiresAt = new Date(decoded.exp * 1000); // Convert to milliseconds
+      const expiresAt = new Date(decoded.exp * 1000);
 
       const tokenHash = this.generateTokenHash(token);
 

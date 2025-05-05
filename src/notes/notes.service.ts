@@ -13,6 +13,8 @@ export class NotesService {
     pageSize = 10,
     keyword = '',
     status?: NoteStatus,
+    from?: Date,
+    to?: Date,
   ) {
     const where: Prisma.TravelNoteWhereInput = {
       isDeleted: false,
@@ -23,6 +25,13 @@ export class NotesService {
           { author: { username: { contains: keyword } } },
         ],
       }),
+      ...(from &&
+        to && {
+          createdAt: {
+            gte: from,
+            lte: to,
+          },
+        }),
     };
 
     const [total, notes] = await this.prisma.$transaction([
@@ -67,7 +76,13 @@ export class NotesService {
     };
   }
 
-  async getApprovedNotes(page = 1, pageSize = 10, keyword = '') {
+  async getApprovedNotes(
+    page = 1,
+    pageSize = 10,
+    keyword = '',
+    from?: Date,
+    to?: Date,
+  ) {
     const where = {
       status: NOTE_STATUS.APPROVED,
       ...(keyword && {
@@ -76,6 +91,13 @@ export class NotesService {
           { author: { username: { contains: keyword, mode: 'insensitive' } } },
         ],
       }),
+      ...(from &&
+        to && {
+          createdAt: {
+            gte: from,
+            lte: to,
+          },
+        }),
     };
 
     const [total, notes] = await this.prisma.$transaction([
@@ -118,7 +140,10 @@ export class NotesService {
   }
 
   async getUserNotes(userId: string, page = 1, pageSize = 10) {
-    const where = { authorId: userId };
+    const where = {
+      authorId: userId,
+      isDeleted: false,
+    };
 
     const [total, notes] = await this.prisma.$transaction([
       this.prisma.travelNote.count({ where }),
@@ -157,13 +182,9 @@ export class NotesService {
 
   async createNote(userId: string, data: CreateNoteDto) {
     const videoCount = data.media.filter((m) => m.type === 'VIDEO').length;
+
     if (videoCount > 1) {
       throw new BadRequestException('只能上传一个视频');
-    }
-
-    const imageCount = data.media.filter((m) => m.type === 'IMAGE').length;
-    if (imageCount === 0) {
-      throw new BadRequestException('至少需要上传一张图片');
     }
 
     return this.prisma.travelNote.create({
@@ -190,7 +211,7 @@ export class NotesService {
 
   async updateNote(id: string, userId: string, data: Partial<CreateNoteDto>) {
     const note = await this.prisma.travelNote.findFirst({
-      where: { id, authorId: userId },
+      where: { id, authorId: userId, isDeleted: false },
     });
 
     if (!note) {
@@ -260,5 +281,34 @@ export class NotesService {
     return this.prisma.travelNote.delete({
       where: { id },
     });
+  }
+
+  async getNoteById(id: string) {
+    const note = await this.prisma.travelNote.findUnique({
+      where: { id, isDeleted: false },
+      include: {
+        author: {
+          select: {
+            id: true,
+            username: true,
+            avatarUrl: true,
+          },
+        },
+        media: {
+          select: {
+            id: true,
+            type: true,
+            url: true,
+            thumbnailUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!note) {
+      throw new BadRequestException('游记不存在');
+    }
+
+    return note;
   }
 }

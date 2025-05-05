@@ -6,12 +6,14 @@ import {
   Get,
   Headers,
   UnauthorizedException,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../users/user.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { UpdateAvatarDto } from './dto/update-avatar.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -59,5 +61,20 @@ export class AuthController {
     } catch (error) {
       throw error;
     }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('avatar')
+  async updateAvatar(
+    @Headers('authorization') auth: string,
+    @Body() updateAvatarDto: UpdateAvatarDto,
+  ) {
+    const token = auth?.split(' ')[1];
+    if (!token) {
+      throw new UnauthorizedException('未提供token');
+    }
+
+    const user = await this.authService.validateToken(token);
+    return this.userService.updateAvatar(user.id, updateAvatarDto.avatarUrl);
   }
 }

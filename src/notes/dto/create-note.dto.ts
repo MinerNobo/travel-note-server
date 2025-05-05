@@ -22,7 +22,6 @@ export class CreateNoteDto {
   @Type(() => MediaDto)
   media: MediaDto[];
 }
-
 export class MediaDto {
   @IsString()
   @IsNotEmpty()

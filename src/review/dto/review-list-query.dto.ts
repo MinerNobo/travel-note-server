@@ -17,4 +17,12 @@ export class ReviewListQueryDto {
   @IsOptional()
   @IsEnum(NoteStatus)
   status?: NoteStatus;
+
+  @IsOptional()
+  @IsString()
+  from?: string;
+
+  @IsOptional()
+  @IsString()
+  to?: string;
 }

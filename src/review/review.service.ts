@@ -1,10 +1,6 @@
-import {
-  Injectable,
-  BadRequestException,
-  ForbiddenException,
-} from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { NoteStatus, Prisma, UserRole } from 'generated/prisma';
+import { NoteStatus, Prisma } from 'generated/prisma';
 import { ReviewListQueryDto } from './dto/review-list-query.dto';
 import { RejectReviewDto } from './dto/review-action.dto';
 import { NotesService } from 'src/notes/notes.service';
@@ -17,27 +13,20 @@ export class ReviewService {
   ) {}
 
   async getReviewList(query: ReviewListQueryDto) {
+    const fromDate = query.from ? new Date(query.from) : undefined;
+    const toDate = query.to ? new Date(query.to) : undefined;
+
     return this.notesService.getAllNotes(
       parseInt(query.page || '1'),
       parseInt(query.pageSize || '10'),
       query.keyword || '',
       query.status,
+      fromDate,
+      toDate,
     );
   }
 
-  async approveNote(noteId: string, userId: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { role: true },
-    });
-
-    if (
-      !user ||
-      (user.role !== UserRole.REVIEWER && user.role !== UserRole.ADMIN)
-    ) {
-      throw new ForbiddenException('没有审核权限');
-    }
-
+  async approveNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
     });
@@ -56,19 +45,7 @@ export class ReviewService {
     });
   }
 
-  async rejectNote(noteId: string, userId: string, data: RejectReviewDto) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { role: true },
-    });
-
-    if (
-      !user ||
-      (user.role !== UserRole.REVIEWER && user.role !== UserRole.ADMIN)
-    ) {
-      throw new ForbiddenException('没有审核权限');
-    }
-
+  async rejectNote(noteId: string, data: RejectReviewDto) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
     });
@@ -90,16 +67,7 @@ export class ReviewService {
     });
   }
 
-  async deleteNote(noteId: string, userId: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { role: true },
-    });
-
-    if (!user || user.role !== UserRole.ADMIN) {
-      throw new ForbiddenException('没有删除权限');
-    }
-
+  async deleteNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
     });
@@ -108,12 +76,40 @@ export class ReviewService {
       throw new BadRequestException('游记不存在');
     }
 
-    // 逻辑删除：更新 isDeleted 字段
     return this.prisma.travelNote.update({
       where: { id: noteId },
       data: {
         isDeleted: true,
       },
     });
+  }
+
+  async getNoteById(noteId: string) {
+    const note = await this.prisma.travelNote.findUnique({
+      where: { id: noteId },
+      include: {
+        author: {
+          select: {
+            id: true,
+            username: true,
+            avatarUrl: true,
+          },
+        },
+        media: {
+          select: {
+            id: true,
+            type: true,
+            url: true,
+            thumbnailUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!note) {
+      throw new BadRequestException('游记不存在');
+    }
+
+    return note;
   }
 }

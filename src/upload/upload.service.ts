@@ -44,7 +44,7 @@ export class UploadService {
     }
 
     await fs.promises.writeFile(filePath, file.buffer);
-    return `/uploads${fileName}`;
+    return `/uploads/${fileName}`;
   }
 
   async uploadAvatar(file: Express.Multer.File) {

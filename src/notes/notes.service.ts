@@ -182,9 +182,14 @@ export class NotesService {
 
   async createNote(userId: string, data: CreateNoteDto) {
     const videoCount = data.media.filter((m) => m.type === 'VIDEO').length;
+    const imageCount = data.media.filter((m) => m.type === 'IMAGE').length;
 
     if (videoCount > 1) {
       throw new BadRequestException('只能上传一个视频');
+    }
+
+    if (imageCount === 0) {
+      throw new BadRequestException('至少需要上传一张图片');
     }
 
     return this.prisma.travelNote.create({

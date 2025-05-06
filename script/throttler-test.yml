@@ -1,0 +1,15 @@
+config:
+  target: 'http://localhost:40000'
+  phases:
+    - duration: 60
+      arrivalRate: 20
+      name: Sustained load
+  defaults:
+    headers:
+      Authorization: 'Bearer your_jwt_token'
+
+scenarios:
+  - name: 'Approved Notes API Load Test'
+    flow:
+      - get:
+          url: '/notes/approved'

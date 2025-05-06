@@ -1,98 +1,121 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Travel Note Server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 项目简介
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Travel Note Server 是一个旅游游记分享应用的后端服务，基于 NestJS 框架开发，提供了完整的用户认证、游记管理和审核系统。
 
-## Description
+## 技术栈
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NestJS
+- Prisma ORM
+- TypeScript
+- JWT 认证
+- bcrypt 密码加密
 
-## Project setup
+## 已实现功能
 
-```bash
-$ pnpm install
-```
+### 1. 用户认证系统
+- 用户注册
+- 用户登录
+- 用户登出
+- 三种用户角色：USER, REVIEWER, ADMIN
+- JWT 认证机制
 
-## Compile and run the project
+### 2. 游记管理
+- 创建游记
+- 更新游记
+- 删除游记
+- 游记状态管理（PENDING, APPROVED, REJECTED）
+- 游记列表查询
+- 支持日期范围和关键词搜索
+- 媒体文件（图片/视频）上传
 
-```bash
-# development
-$ pnpm run start
+### 3. 审核系统
+- 审核员和管理员可审核游记
+- 批准或拒绝游记
+- 添加拒绝原因
 
-# watch mode
-$ pnpm run start:dev
+### 4. 安全特性
+- JWT 认证
+- 密码 bcrypt 加密
+- 请求限流
+- 数据验证拦截器
+- 角色权限控制
 
-# production mode
-$ pnpm run start:prod
-```
+## 待完成功能
 
-## Run tests
+- [ ] 微信分享功能
+- [ ] 性能优化
+- [ ] 更详细的用户统计和分析
 
-```bash
-# unit tests
-$ pnpm run test
+## 运行环境要求
 
-# e2e tests
-$ pnpm run test:e2e
+- Node.js 18+
+- pnpm
 
-# test coverage
-$ pnpm run test:cov
-```
+## 本地开发
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 1. 克隆项目
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+git clone https://github.com/your-username/travel-note-server.git
+cd travel-note-server
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. 安装依赖
 
-## Resources
+```bash
+pnpm install
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 3. 配置环境变量
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+复制 `.env.example` 到 `.env` 并配置相关参数
 
-## Support
+### 4. 数据库迁移
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+pnpm prisma migrate dev
+```
 
-## Stay in touch
+### 5. 启动开发服务器
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+pnpm run start:dev
+```
 
-## License
+## 测试
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 运行单元测试
+
+```bash
+pnpm run test
+```
+
+### 运行测试覆盖率
+
+```bash
+pnpm run test:cov
+```
+
+## 部署
+
+### 生产构建
+
+```bash
+pnpm run build
+pnpm run start:prod
+```
+
+## 贡献指南
+
+1. Fork 仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交代码 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 提交 Pull Request
+
+## 联系方式
+
+项目负责人 - [MinerNobo]
+项目链接: [https://github.com/MinerNobo/travel-note-server]

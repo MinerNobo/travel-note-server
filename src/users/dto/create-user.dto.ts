@@ -14,5 +14,5 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  avatarUrl?: string = 'default-avatar.jpg';
+  avatarUrl?: string = '/uploads/images/default-avatar.jpg';
 }

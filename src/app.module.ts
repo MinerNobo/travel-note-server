@@ -8,12 +8,14 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma.module';
 import { ReviewModule } from './review/review.module';
 import { NotificationModule } from './notification/notification.module';
+import { CustomThrottlerModule } from './common/throttler/throttler.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    CustomThrottlerModule,
     PrismaModule,
     NotesModule,
     UploadModule,

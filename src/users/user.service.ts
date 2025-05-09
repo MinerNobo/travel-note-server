@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { User, UserRole } from 'generated/prisma';
+import { DEFAULT_AVATAR } from 'src/constants';
 
 type UserWithoutPassword = Omit<User, 'password'>;
 
@@ -29,8 +30,7 @@ export class UserService {
       data: {
         username: createUserDto.username,
         password: hashedPassword,
-        avatarUrl:
-          createUserDto.avatarUrl || '/uploads/images/default-avatar.jpg',
+        avatarUrl: createUserDto.avatarUrl || DEFAULT_AVATAR,
       },
     });
 

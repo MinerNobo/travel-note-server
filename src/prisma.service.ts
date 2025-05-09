@@ -1,6 +1,7 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaClient, UserRole } from 'generated/prisma';
 import * as bcrypt from 'bcryptjs';
+import { DEFAULT_AVATAR } from './constants';
 
 @Injectable()
 export class PrismaService
@@ -19,7 +20,12 @@ export class PrismaService
   private async initializeAdminAccounts() {
     const adminUsername = 'admin';
     const reviewerUsername = 'reviewer';
-    const defaultPassword = '123456';
+    const defaultPassword = process.env.ADMIN_PASSWORD;
+
+    if (!defaultPassword) {
+      console.log('请在.env中配置ADMIN_PASSWORD');
+      return;
+    }
 
     const adminExists = await this.user.findUnique({
       where: { username: adminUsername },
@@ -31,10 +37,10 @@ export class PrismaService
         data: {
           username: adminUsername,
           password: hashedPassword,
+          avatarUrl: DEFAULT_AVATAR,
           role: UserRole.ADMIN,
         },
       });
-      console.log('Admin account created successfully');
     }
 
     const reviewerExists = await this.user.findUnique({
@@ -47,10 +53,10 @@ export class PrismaService
         data: {
           username: reviewerUsername,
           password: hashedPassword,
+          avatarUrl: DEFAULT_AVATAR,
           role: UserRole.REVIEWER,
         },
       });
-      console.log('Reviewer account created successfully');
     }
   }
 }

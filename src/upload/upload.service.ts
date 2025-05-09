@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -169,24 +169,5 @@ export class UploadService {
       console.error('默认缩略图生成错误:', error);
       return false;
     }
-  }
-
-  async uploadAvatar(file: Express.Multer.File) {
-    const compressedBuffer = await sharp(file.buffer)
-      .resize(200, 200, { fit: 'cover' })
-      .jpeg({ quality: 80 })
-      .toBuffer();
-
-    const fileName = `avatars/${Date.now()}-${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`;
-    const filePath = path.join(this.uploadDir, fileName);
-
-    const dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    await fs.promises.writeFile(filePath, compressedBuffer);
-
-    return `/uploads/${fileName}`;
   }
 }

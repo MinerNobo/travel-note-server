@@ -4,7 +4,7 @@ import { ReviewListQueryDto } from './dto/review-list-query.dto';
 import { RejectReviewDto } from './dto/review-action.dto';
 import { NotesService } from 'src/notes/notes.service';
 import { NotificationService } from 'src/notification/notification.service';
-import { NoteStatus } from 'generated/prisma';
+import { NoteStatus, NotificationType } from 'generated/prisma';
 
 @Injectable()
 export class ReviewService {
@@ -49,7 +49,7 @@ export class ReviewService {
 
     await this.notificationService.createNotification(
       note.authorId,
-      'NOTE_APPROVED',
+      NotificationType.NOTE_APPROVED,
       `您的游记《${note.title}》已审核通过`,
       noteId,
     );
@@ -81,7 +81,7 @@ export class ReviewService {
 
     await this.notificationService.createNotification(
       note.authorId,
-      'NOTE_REJECTED',
+      NotificationType.NOTE_REJECTED,
       `您的游记《${note.title}》未通过审核。原因：${data.rejectReason}`,
       noteId,
     );
@@ -106,10 +106,9 @@ export class ReviewService {
       },
     });
 
-    // 发送删除通知
     await this.notificationService.createNotification(
       note.authorId,
-      'NOTE_DELETED',
+      NotificationType.NOTE_DELETED,
       `您的游记《${note.title}》已被管理员删除`,
       noteId,
     );

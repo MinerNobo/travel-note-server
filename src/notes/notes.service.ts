@@ -1,6 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { Prisma, TravelNote, NoteStatus } from 'generated/prisma';
-import { NOTE_STATUS } from 'src/contants';
+import { Prisma, NoteStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 
@@ -84,7 +83,7 @@ export class NotesService {
     to?: Date,
   ) {
     const where = {
-      status: NOTE_STATUS.APPROVED,
+      status: NoteStatus.APPROVED,
       ...(keyword && {
         OR: [
           { title: { contains: keyword, mode: 'insensitive' } },
@@ -196,7 +195,7 @@ export class NotesService {
       data: {
         title: data.title,
         content: data.content,
-        status: NOTE_STATUS.PENDING,
+        status: NoteStatus.PENDING,
         author: {
           connect: { id: userId },
         },
@@ -223,7 +222,7 @@ export class NotesService {
       throw new BadRequestException('游记不存在或无权限修改');
     }
 
-    if (note.status !== NOTE_STATUS.PENDING) {
+    if (note.status !== NoteStatus.PENDING) {
       throw new BadRequestException('当前状态不允许修改');
     }
 
@@ -240,7 +239,7 @@ export class NotesService {
     }
 
     const updateData: Prisma.TravelNoteUpdateInput = {
-      status: NOTE_STATUS.PENDING,
+      status: NoteStatus.PENDING,
     };
 
     if (data.title) {

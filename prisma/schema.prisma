@@ -15,14 +15,15 @@ datasource db {
 }
 
 model User {
-  id        String       @id @default(uuid())
-  username  String       @unique
-  password  String
-  avatarUrl String?      @map("avatar_url")
-  createdAt DateTime     @default(now()) @map("created_at")
-  updatedAt DateTime     @updatedAt @map("updated_at")
-  role      UserRole     @default(USER)
-  notes     TravelNote[]
+  id            String         @id @default(uuid())
+  username      String         @unique
+  password      String
+  avatarUrl     String?        @map("avatar_url")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  role          UserRole       @default(USER)
+  notes         TravelNote[]
+  notifications Notification[]
 }
 
 model TravelNote {
@@ -72,4 +73,24 @@ enum UserRole {
 enum MediaType {
   IMAGE
   VIDEO
+}
+
+enum NotificationType {
+  NOTE_APPROVED
+  NOTE_REJECTED
+  NOTE_DELETED
+  COMMENT_RECEIVED
+  SYSTEM_ALERT
+}
+
+model Notification {
+  id              String           @id @default(uuid())
+  userId          String           @map("user_id")
+  user            User             @relation(fields: [userId], references: [id])
+  type            NotificationType
+  content         String
+  relatedEntityId String?          @map("related_entity_id")
+  isRead          Boolean          @default(false) @map("is_read")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
 }

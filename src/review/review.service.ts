@@ -1,15 +1,17 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { NoteStatus, Prisma } from 'generated/prisma';
 import { ReviewListQueryDto } from './dto/review-list-query.dto';
 import { RejectReviewDto } from './dto/review-action.dto';
 import { NotesService } from 'src/notes/notes.service';
+import { NotificationService } from 'src/notification/notification.service';
+import { NoteStatus } from 'generated/prisma';
 
 @Injectable()
 export class ReviewService {
   constructor(
     private prisma: PrismaService,
     private notesService: NotesService,
+    private notificationService: NotificationService,
   ) {}
 
   async getReviewList(query: ReviewListQueryDto) {
@@ -29,6 +31,7 @@ export class ReviewService {
   async approveNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
+      include: { author: true },
     });
 
     if (!note) {
@@ -39,15 +42,25 @@ export class ReviewService {
       throw new BadRequestException('该游记不在待审核状态');
     }
 
-    return this.prisma.travelNote.update({
+    const updatedNote = await this.prisma.travelNote.update({
       where: { id: noteId },
       data: { status: NoteStatus.APPROVED },
     });
+
+    await this.notificationService.createNotification(
+      note.authorId,
+      'NOTE_APPROVED',
+      `您的游记《${note.title}》已审核通过`,
+      noteId,
+    );
+
+    return updatedNote;
   }
 
   async rejectNote(noteId: string, data: RejectReviewDto) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
+      include: { author: true },
     });
 
     if (!note) {
@@ -58,30 +71,50 @@ export class ReviewService {
       throw new BadRequestException('该游记不在待审核状态');
     }
 
-    return this.prisma.travelNote.update({
+    const updatedNote = await this.prisma.travelNote.update({
       where: { id: noteId },
       data: {
         status: NoteStatus.REJECTED,
         rejectReason: data.rejectReason,
       },
     });
+
+    await this.notificationService.createNotification(
+      note.authorId,
+      'NOTE_REJECTED',
+      `您的游记《${note.title}》未通过审核。原因：${data.rejectReason}`,
+      noteId,
+    );
+
+    return updatedNote;
   }
 
   async deleteNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
+      include: { author: true },
     });
 
     if (!note) {
       throw new BadRequestException('游记不存在');
     }
 
-    return this.prisma.travelNote.update({
+    const deletedNote = await this.prisma.travelNote.update({
       where: { id: noteId },
       data: {
         isDeleted: true,
       },
     });
+
+    // 发送删除通知
+    await this.notificationService.createNotification(
+      note.authorId,
+      'NOTE_DELETED',
+      `您的游记《${note.title}》已被管理员删除`,
+      noteId,
+    );
+
+    return deletedNote;
   }
 
   async getNoteById(noteId: string) {

@@ -29,7 +29,8 @@ export class UserService {
       data: {
         username: createUserDto.username,
         password: hashedPassword,
-        avatarUrl: createUserDto.avatarUrl,
+        avatarUrl:
+          createUserDto.avatarUrl || '/uploads/images/default-avatar.jpg',
       },
     });
 

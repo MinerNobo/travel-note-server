@@ -159,6 +159,17 @@ exports.Prisma.TokenBlacklistScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  content: 'content',
+  relatedEntityId: 'relatedEntityId',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -195,6 +206,13 @@ exports.Prisma.TokenBlacklistOrderByRelevanceFieldEnum = {
   id: 'id',
   tokenHash: 'tokenHash'
 };
+
+exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  relatedEntityId: 'relatedEntityId'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   REVIEWER: 'REVIEWER',
@@ -212,11 +230,20 @@ exports.MediaType = exports.$Enums.MediaType = {
   VIDEO: 'VIDEO'
 };
 
+exports.NotificationType = exports.$Enums.NotificationType = {
+  NOTE_APPROVED: 'NOTE_APPROVED',
+  NOTE_REJECTED: 'NOTE_REJECTED',
+  NOTE_DELETED: 'NOTE_DELETED',
+  COMMENT_RECEIVED: 'COMMENT_RECEIVED',
+  SYSTEM_ALERT: 'SYSTEM_ALERT'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   TravelNote: 'TravelNote',
   Media: 'Media',
-  TokenBlacklist: 'TokenBlacklist'
+  TokenBlacklist: 'TokenBlacklist',
+  Notification: 'Notification'
 };
 
 /**

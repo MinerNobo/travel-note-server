@@ -3,9 +3,12 @@ import { AppModule } from './app.module';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useWebSocketAdapter(new IoAdapter(app));
 
   app.enableCors({
     origin: 'http://localhost:5173',

@@ -109,6 +109,7 @@ export class NotesService {
         select: {
           id: true,
           title: true,
+          content: true,
           media: {
             where: { type: 'IMAGE' },
             take: 1,
@@ -132,6 +133,7 @@ export class NotesService {
       data: notes.map((note) => ({
         id: note.id,
         title: note.title,
+        content: note.content,
         imageUrl: note.media[0]?.url || null,
         author: note.author,
       })),

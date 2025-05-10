@@ -4,7 +4,6 @@ import {
   MinLength,
   MaxLength,
   IsOptional,
-  IsUrl,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -21,7 +20,6 @@ export class CreateUserDto {
   password: string;
 
   @IsString({ message: '用户头像必须是字符串' })
-  @IsUrl({}, { message: '请提供有效的头像URL' })
   @MaxLength(300, { message: '头像URL长度不能超过300个字符' })
   @IsOptional()
   avatarUrl?: string;

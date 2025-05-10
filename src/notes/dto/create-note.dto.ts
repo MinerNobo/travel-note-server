@@ -6,7 +6,6 @@ import {
   ValidateNested,
   MaxLength,
   IsEnum,
-  IsUrl,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
 
@@ -35,14 +34,12 @@ export class MediaDto {
 
   @IsNotEmpty({ message: '媒体URL不能为空' })
   @IsString({ message: '媒体URL必须是字符串' })
-  @IsUrl({}, { message: '请提供有效的媒体URL' })
   @MaxLength(300, { message: '媒体URL长度不能超过300个字符' })
   url: string;
 
   @IsString()
   @IsOptional()
   @IsString({ message: '缩略图URL必须是字符串' })
-  @IsUrl({}, { message: '请提供有效的缩略图URL' })
   @MaxLength(300, { message: '缩略图URL长度不能超过300个字符' })
   thumbnailUrl?: string;
 }

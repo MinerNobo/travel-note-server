@@ -23,7 +23,6 @@ export class ShareMetadataDto {
   link?: string;
 
   @IsOptional()
-  @IsUrl({}, { message: '请提供有效的图片URL' })
   @MaxLength(300, { message: '图片URL长度不能超过300个字符' })
   coverImageUrl?: string;
 }

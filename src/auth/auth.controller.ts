@@ -7,6 +7,7 @@ import {
   Headers,
   UnauthorizedException,
   Patch,
+  BadRequestException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../users/user.service';
@@ -69,6 +70,19 @@ export class AuthController {
     @Headers('authorization') auth: string,
     @Body() updateAvatarDto: UpdateAvatarDto,
   ) {
+    // 基本的URL验证
+    if (!updateAvatarDto.avatarUrl || updateAvatarDto.avatarUrl.trim() === '') {
+      throw new BadRequestException('头像URL不能为空');
+    }
+
+    // 验证路径是否以 /uploads/ 开头或是有效的外部URL
+    const isValidLocalPath = updateAvatarDto.avatarUrl.startsWith('/uploads/');
+    const isValidExternalUrl = /^https?:\/\//i.test(updateAvatarDto.avatarUrl);
+
+    if (!isValidLocalPath && !isValidExternalUrl) {
+      throw new BadRequestException('无效的头像URL');
+    }
+
     const token = auth?.split(' ')[1];
     if (!token) {
       throw new UnauthorizedException('未提供token');

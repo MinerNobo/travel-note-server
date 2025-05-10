@@ -5,6 +5,7 @@ import { RejectReviewDto } from './dto/review-action.dto';
 import { NotesService } from 'src/notes/notes.service';
 import { NotificationService } from 'src/notification/notification.service';
 import { NoteStatus, NotificationType } from 'generated/prisma';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 
 @Injectable()
 export class ReviewService {
@@ -14,6 +15,7 @@ export class ReviewService {
     private notificationService: NotificationService,
   ) {}
 
+  @CatchException('ReviewService.getReviewList')
   async getReviewList(query: ReviewListQueryDto) {
     const fromDate = query.from ? new Date(query.from) : undefined;
     const toDate = query.to ? new Date(query.to) : undefined;
@@ -28,6 +30,7 @@ export class ReviewService {
     );
   }
 
+  @CatchException('ReviewService.approveNote')
   async approveNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
@@ -57,6 +60,7 @@ export class ReviewService {
     return updatedNote;
   }
 
+  @CatchException('ReviewService.rejectNote')
   async rejectNote(noteId: string, data: RejectReviewDto) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
@@ -89,6 +93,7 @@ export class ReviewService {
     return updatedNote;
   }
 
+  @CatchException('ReviewService.deleteNote')
   async deleteNote(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },
@@ -116,6 +121,7 @@ export class ReviewService {
     return deletedNote;
   }
 
+  @CatchException('ReviewService.getNoteById')
   async getNoteById(noteId: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id: noteId },

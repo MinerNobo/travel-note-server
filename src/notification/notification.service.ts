@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { NotificationType } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 import { NotificationGateway } from './notification.gateway';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
+import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
 export class NotificationService {
@@ -10,6 +12,7 @@ export class NotificationService {
     private notificationGateway: NotificationGateway,
   ) {}
 
+  @CatchException('NotificationService.createNotification')
   async createNotification(
     userId: string,
     type: NotificationType,
@@ -37,6 +40,7 @@ export class NotificationService {
     return notification;
   }
 
+  @CatchException('NotificationService.getUserNotifications')
   async getUserNotifications(userId: string, page = 1, pageSize = 10) {
     const [total, notifications] = await Promise.all([
       this.prisma.notification.count({
@@ -58,6 +62,7 @@ export class NotificationService {
     };
   }
 
+  @CatchException('NotificationService.markNotificationAsRead')
   async markNotificationAsRead(notificationId: string, userId: string) {
     const result = await this.prisma.notification.updateMany({
       where: {
@@ -69,6 +74,10 @@ export class NotificationService {
       },
     });
 
+    if (result.count === 0) {
+      throw new BadRequestException('通知不存在或无权限标记');
+    }
+
     this.notificationGateway.sendNotificationToUser(userId, {
       type: 'NOTIFICATION_READ',
       notificationId,
@@ -77,6 +86,7 @@ export class NotificationService {
     return result;
   }
 
+  @CatchException('NotificationService.markAllNotificationsAsRead')
   async markAllNotificationsAsRead(userId: string) {
     const result = await this.prisma.notification.updateMany({
       where: {
@@ -95,6 +105,7 @@ export class NotificationService {
     return result;
   }
 
+  @CatchException('NotificationService.getUnreadNotificationsCount')
   async getUnreadNotificationsCount(userId: string) {
     return this.prisma.notification.count({
       where: {

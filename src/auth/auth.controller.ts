@@ -15,6 +15,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { UpdateAvatarDto } from './dto/update-avatar.dto';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -24,6 +25,7 @@ export class AuthController {
   ) {}
 
   @Post('register')
+  @CatchException('AuthController.register')
   async register(@Body() createUserDto: CreateUserDto) {
     const user = await this.userService.create(createUserDto);
     return this.authService.login(
@@ -33,12 +35,14 @@ export class AuthController {
   }
 
   @Post('login')
+  @CatchException('AuthController.login')
   async login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto.username, loginDto.password);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
+  @CatchException('AuthController.getProfile')
   getProfile(@Headers('authorization') auth: string) {
     const token = auth?.split(' ')[1];
     if (!token) {
@@ -49,6 +53,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('logout')
+  @CatchException('AuthController.logout')
   async logout(@Headers('authorization') auth: string) {
     const token = auth?.split(' ')[1];
 
@@ -56,16 +61,12 @@ export class AuthController {
       throw new UnauthorizedException('未提供token');
     }
 
-    try {
-      const result = await this.authService.logout(token);
-      return result;
-    } catch (error) {
-      throw error;
-    }
+    return this.authService.logout(token);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch('avatar')
+  @CatchException('AuthController.updateAvatar')
   async updateAvatar(
     @Headers('authorization') auth: string,
     @Body() updateAvatarDto: UpdateAvatarDto,

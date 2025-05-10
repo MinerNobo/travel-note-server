@@ -1,12 +1,16 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { Prisma, NoteStatus } from 'generated/prisma';
 import { PrismaService } from 'src/prisma.service';
 import { CreateNoteDto } from './dto/create-note.dto';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 
 @Injectable()
 export class NotesService {
+  private readonly logger = new Logger(NotesService.name);
+
   constructor(private prisma: PrismaService) {}
 
+  @CatchException('NotesService.getAllNotes')
   async getAllNotes(
     page = 1,
     pageSize = 10,
@@ -75,6 +79,7 @@ export class NotesService {
     };
   }
 
+  @CatchException('NotesService.getApprovedNotes')
   async getApprovedNotes(
     page = 1,
     pageSize = 10,
@@ -82,12 +87,22 @@ export class NotesService {
     from?: Date,
     to?: Date,
   ) {
-    const where = {
+    const where: Prisma.TravelNoteWhereInput = {
       status: NoteStatus.APPROVED,
       ...(keyword && {
         OR: [
-          { title: { contains: keyword, mode: 'insensitive' } },
-          { author: { username: { contains: keyword, mode: 'insensitive' } } },
+          {
+            title: {
+              contains: keyword,
+            },
+          },
+          {
+            author: {
+              username: {
+                contains: keyword,
+              },
+            },
+          },
         ],
       }),
       ...(from &&
@@ -99,7 +114,7 @@ export class NotesService {
         }),
     };
 
-    const [total, notes] = await this.prisma.$transaction([
+    const [total, notes] = await Promise.all([
       this.prisma.travelNote.count({ where }),
       this.prisma.travelNote.findMany({
         where,
@@ -140,6 +155,7 @@ export class NotesService {
     };
   }
 
+  @CatchException('NotesService.getUserNotes')
   async getUserNotes(userId: string, page = 1, pageSize = 10) {
     const where = {
       authorId: userId,
@@ -181,6 +197,7 @@ export class NotesService {
     };
   }
 
+  @CatchException('NotesService.createNote')
   async createNote(userId: string, data: CreateNoteDto) {
     const videoCount = data.media.filter((m) => m.type === 'VIDEO').length;
     const imageCount = data.media.filter((m) => m.type === 'IMAGE').length;
@@ -215,6 +232,7 @@ export class NotesService {
     });
   }
 
+  @CatchException('NotesService.updateNote')
   async updateNote(id: string, userId: string, data: Partial<CreateNoteDto>) {
     const note = await this.prisma.travelNote.findFirst({
       where: { id, authorId: userId, isDeleted: false },
@@ -275,6 +293,7 @@ export class NotesService {
     });
   }
 
+  @CatchException('NotesService.deleteNote')
   async deleteNote(id: string, userId: string) {
     const note = await this.prisma.travelNote.findFirst({
       where: { id, authorId: userId },
@@ -289,6 +308,7 @@ export class NotesService {
     });
   }
 
+  @CatchException('NotesService.getNoteById')
   async getNoteById(id: string) {
     const note = await this.prisma.travelNote.findUnique({
       where: { id, isDeleted: false },

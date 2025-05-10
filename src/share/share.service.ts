@@ -4,6 +4,8 @@ import * as crypto from 'crypto';
 import axios from 'axios';
 import { ShareMetadataDto } from './dto/share-metadata.dto';
 import { PrismaService } from 'src/prisma.service';
+import { BadRequestException } from '@nestjs/common';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 
 @Injectable()
 export class ShareService {
@@ -24,30 +26,27 @@ export class ShareService {
     }
   }
 
+  @CatchException('ShareService.getWechatAccessToken')
   private async getWechatAccessToken(): Promise<string> {
-    try {
-      const response = await axios.get(
-        'https://api.weixin.qq.com/cgi-bin/token',
-        {
-          params: {
-            grant_type: 'client_credential',
-            appid: this.wxAppId,
-            secret: this.wxAppSecret,
-          },
+    const response = await axios.get(
+      'https://api.weixin.qq.com/cgi-bin/token',
+      {
+        params: {
+          grant_type: 'client_credential',
+          appid: this.wxAppId,
+          secret: this.wxAppSecret,
         },
-      );
+      },
+    );
 
-      if (!response.data.access_token) {
-        throw new Error('获取微信 access_token 失败');
-      }
-
-      return response.data.access_token;
-    } catch (error) {
-      console.error('获取微信 access_token 时发生错误:', error);
-      throw error;
+    if (!response.data.access_token) {
+      throw new BadRequestException('获取微信 access_token 失败');
     }
+
+    return response.data.access_token;
   }
 
+  @CatchException('ShareService.getWechatJSSDKSignature')
   async getWechatJSSDKSignature(url: string): Promise<{
     appId: string;
     timestamp: number;
@@ -92,33 +91,29 @@ export class ShareService {
     };
   }
 
+  @CatchException('ShareService.generateShareMetadata')
   async generateShareMetadata(travelNoteId: string): Promise<ShareMetadataDto> {
-    try {
-      const travelNote = await this.prismaService.travelNote.findUnique({
-        where: { id: travelNoteId },
-        include: {
-          author: true,
-          media: {
-            take: 1,
-            where: { type: 'IMAGE' },
-          },
+    const travelNote = await this.prismaService.travelNote.findUnique({
+      where: { id: travelNoteId },
+      include: {
+        author: true,
+        media: {
+          take: 1,
+          where: { type: 'IMAGE' },
         },
-      });
+      },
+    });
 
-      if (!travelNote) {
-        throw new Error(`未找到ID为 ${travelNoteId} 的游记`);
-      }
-
-      return {
-        title: `${travelNote.author.username}的旅行游记 - ${travelNote.title}`,
-        description: travelNote.content.slice(0, 100) + '...',
-        link: `https://yourdomain.com/travel-notes/${travelNoteId}`,
-        coverImageUrl:
-          travelNote.media.length > 0 ? travelNote.media[0].url : undefined,
-      };
-    } catch (error) {
-      console.error('生成分享元数据时发生错误:', error);
-      throw error;
+    if (!travelNote) {
+      throw new BadRequestException(`未找到ID为 ${travelNoteId} 的游记`);
     }
+
+    return {
+      title: `${travelNote.author.username}的旅行游记 - ${travelNote.title}`,
+      description: travelNote.content.slice(0, 100) + '...',
+      link: `https://yourdomain.com/travel-notes/${travelNoteId}`,
+      coverImageUrl:
+        travelNote.media.length > 0 ? travelNote.media[0].url : undefined,
+    };
   }
 }

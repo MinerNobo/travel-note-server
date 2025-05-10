@@ -4,9 +4,9 @@ import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
+import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -38,7 +38,6 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    maxAge: 3600, // 缓存预检请求1小时
   });
 
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
@@ -54,7 +53,10 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
-      disableErrorMessages: process.env.NODE_ENV === 'production',
+      validationError: {
+        target: false,
+        value: false,
+      },
     }),
   );
 
@@ -64,4 +66,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 40000);
 }
+
 bootstrap();

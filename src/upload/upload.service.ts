@@ -1,9 +1,10 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as sharp from 'sharp';
 import * as ffmpeg from 'fluent-ffmpeg';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as sharp from 'sharp';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 import * as util from 'util';
 
 const ffmpegAsync = {
@@ -32,6 +33,7 @@ export class UploadService {
     }
   }
 
+  @CatchException('UploadService.uploadImage')
   async uploadImage(file: Express.Multer.File) {
     const compressedBuffer = await sharp(file.buffer)
       .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
@@ -51,6 +53,7 @@ export class UploadService {
     return `/uploads/${fileName}`;
   }
 
+  @CatchException('UploadService.uploadVideo')
   async uploadVideo(file: Express.Multer.File) {
     const fileName = `videos/${Date.now()}-${Math.random().toString(36).slice(2)}${path.extname(file.originalname)}`;
     const filePath = path.join(this.uploadDir, fileName);
@@ -71,103 +74,77 @@ export class UploadService {
       fs.mkdirSync(thumbnailDir, { recursive: true });
     }
 
-    try {
-      fs.accessSync(thumbnailDir, fs.constants.W_OK);
-      console.log('缩略图目录可写');
-    } catch (err) {
-      console.error('缩略图目录不可写:', err);
-    }
-
     await fs.promises.writeFile(filePath, file.buffer);
 
-    try {
-      const tempVideoPath = path.join(
-        this.uploadDir,
-        `temp-${Date.now()}${path.extname(file.originalname)}`,
-      );
-      await fs.promises.writeFile(tempVideoPath, file.buffer);
+    const tempVideoPath = path.join(
+      this.uploadDir,
+      `temp-${Date.now()}${path.extname(file.originalname)}`,
+    );
+    await fs.promises.writeFile(tempVideoPath, file.buffer);
 
-      await new Promise((resolve, reject) => {
-        ffmpeg(tempVideoPath)
-          .on('start', (commandLine) => {
-            console.log('ffmpeg命令: ' + commandLine);
-          })
-          .on('error', (err) => {
-            console.error('FFmpeg错误:', err);
-            reject(err);
-          })
-          .on('end', () => {
-            console.log('缩略图生成完成');
-            resolve(true);
-          })
-          .screenshots({
-            count: 1,
-            timemarks: ['1'],
-            size: '320x240',
-            filename: path.basename(thumbnailPath),
-            folder: path.dirname(thumbnailPath),
-          });
-      });
+    await new Promise((resolve, reject) => {
+      ffmpeg(tempVideoPath)
+        .on('start', (commandLine) => {
+          console.log('ffmpeg命令: ' + commandLine);
+        })
+        .on('error', (err) => {
+          console.error('FFmpeg错误:', err);
+          reject(err);
+        })
+        .on('end', () => {
+          console.log('缩略图生成完成');
+          resolve(true);
+        })
+        .screenshots({
+          count: 1,
+          timemarks: ['1'],
+          size: '320x240',
+          filename: path.basename(thumbnailPath),
+          folder: path.dirname(thumbnailPath),
+        });
+    });
 
-      await fs.promises.unlink(tempVideoPath);
+    await fs.promises.unlink(tempVideoPath);
 
-      if (fs.existsSync(thumbnailPath)) {
-        console.log('缩略图生成成功:', thumbnailPath);
-      } else {
-        console.warn('缩略图文件不存在:', thumbnailPath);
-      }
-
+    if (fs.existsSync(thumbnailPath)) {
+      console.log('缩略图生成成功:', thumbnailPath);
+    } else {
+      console.warn('缩略图文件不存在:', thumbnailPath);
+      const defaultThumbnail =
+        await this.generateDefaultVideoThumbnail(thumbnailPath);
       return {
         videoUrl: `/uploads/${fileName}`,
-        thumbnailUrl: `/uploads/${thumbnailFileName}`,
+        thumbnailUrl: defaultThumbnail ? `/uploads/${thumbnailFileName}` : null,
       };
-    } catch (error) {
-      console.error('缩略图生成错误:', error);
-
-      try {
-        const defaultThumbnail =
-          await this.generateDefaultVideoThumbnail(thumbnailPath);
-        return {
-          videoUrl: `/uploads/${fileName}`,
-          thumbnailUrl: defaultThumbnail
-            ? `/uploads/${thumbnailFileName}`
-            : null,
-        };
-      } catch (defaultError) {
-        console.error('默认缩略图生成错误:', defaultError);
-        return {
-          videoUrl: `/uploads/${fileName}`,
-          thumbnailUrl: null,
-        };
-      }
     }
+
+    return {
+      videoUrl: `/uploads/${fileName}`,
+      thumbnailUrl: `/uploads/${thumbnailFileName}`,
+    };
   }
 
+  @CatchException('UploadService.generateDefaultVideoThumbnail')
   private async generateDefaultVideoThumbnail(
     thumbnailPath: string,
   ): Promise<boolean> {
-    try {
-      const defaultImage = await sharp({
-        create: {
-          width: 320,
-          height: 240,
-          channels: 4,
-          background: { r: 200, g: 200, b: 200, alpha: 0.5 },
-        },
-      })
-        .jpeg({ quality: 80 })
-        .toBuffer();
+    const defaultImage = await sharp({
+      create: {
+        width: 320,
+        height: 240,
+        channels: 4,
+        background: { r: 200, g: 200, b: 200, alpha: 0.5 },
+      },
+    })
+      .jpeg({ quality: 80 })
+      .toBuffer();
 
-      const thumbnailDir = path.dirname(thumbnailPath);
-      if (!fs.existsSync(thumbnailDir)) {
-        fs.mkdirSync(thumbnailDir, { recursive: true });
-      }
-
-      await fs.promises.writeFile(thumbnailPath, defaultImage);
-      return true;
-    } catch (error) {
-      console.error('默认缩略图生成错误:', error);
-      return false;
+    const thumbnailDir = path.dirname(thumbnailPath);
+    if (!fs.existsSync(thumbnailDir)) {
+      fs.mkdirSync(thumbnailDir, { recursive: true });
     }
+
+    await fs.promises.writeFile(thumbnailPath, defaultImage);
+    return true;
   }
 }

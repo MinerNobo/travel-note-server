@@ -8,6 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { User, UserRole } from 'generated/prisma';
 import { DEFAULT_AVATAR } from 'src/constants';
+import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 
 type UserWithoutPassword = Omit<User, 'password'>;
 
@@ -15,6 +16,7 @@ type UserWithoutPassword = Omit<User, 'password'>;
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
+  @CatchException('UserService.create')
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.prisma.user.findFirst({
       where: { username: createUserDto.username },
@@ -38,6 +40,7 @@ export class UserService {
     return result;
   }
 
+  @CatchException('UserService.findByUsername')
   async findByUsername(
     username: string,
     includePassword = false,
@@ -58,6 +61,7 @@ export class UserService {
     return user;
   }
 
+  @CatchException('UserService.findById')
   async findById(id: string): Promise<UserWithoutPassword> {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -71,6 +75,7 @@ export class UserService {
     return result;
   }
 
+  @CatchException('UserService.updateAvatar')
   async updateAvatar(
     userId: string,
     avatarUrl: string,

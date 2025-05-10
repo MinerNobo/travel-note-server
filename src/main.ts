@@ -11,7 +11,25 @@ import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'", 'data:', 'https:', 'http:', 'wxfile://'],
+          mediaSrc: ["'self'", 'data:', 'https:', 'http:', 'wxfile://'],
+          connectSrc: ["'self'", 'https:', 'http:'],
+          fontSrc: ["'self'", 'https:', 'data:'],
+          objectSrc: ["'none'"],
+          frameSrc: ["'self'"],
+        },
+      },
+      crossOriginOpenerPolicy: { policy: 'unsafe-none' },
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+  );
 
   app.useWebSocketAdapter(new IoAdapter(app));
 
@@ -25,6 +43,10 @@ async function bootstrap() {
 
   app.useStaticAssets(join(__dirname, '..', 'uploads'), {
     prefix: '/uploads/',
+    setHeaders: (res, path) => {
+      res.set('Access-Control-Allow-Origin', '*');
+      res.set('Cache-Control', 'public, max-age=86400');
+    },
   });
 
   app.useGlobalPipes(

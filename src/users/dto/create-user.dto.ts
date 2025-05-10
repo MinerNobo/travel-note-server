@@ -1,18 +1,28 @@
-import { IsString, MinLength, Matches, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsOptional,
+  IsUrl,
+} from 'class-validator';
 
 export class CreateUserDto {
-  @IsString()
-  @MinLength(3, { message: '用户名至少需要3个字符' })
+  @IsNotEmpty({ message: '用户名不能为空' })
+  @IsString({ message: '用户名必须是字符串' })
+  @MinLength(2, { message: '用户名长度不能少于2个字符' })
+  @MaxLength(20, { message: '用户名长度不能超过20个字符' })
   username: string;
 
-  @IsString()
-  @MinLength(8, { message: '密码至少需要8个字符' })
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: '密码必须包含大小写字母和数字',
-  })
+  @IsNotEmpty({ message: '密码不能为空' })
+  @IsString({ message: '密码必须是字符串' })
+  @MinLength(6, { message: '密码长度不能少于6个字符' })
+  @MaxLength(30, { message: '密码长度不能超过30个字符' })
   password: string;
 
-  @IsString()
+  @IsString({ message: '用户头像必须是字符串' })
+  @IsUrl({}, { message: '请提供有效的头像URL' })
+  @MaxLength(300, { message: '头像URL长度不能超过300个字符' })
   @IsOptional()
-  avatarUrl?: string = '/uploads/images/default-avatar.jpg';
+  avatarUrl?: string;
 }

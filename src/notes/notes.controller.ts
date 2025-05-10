@@ -14,6 +14,7 @@ import {
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('notes')
 export class NotesController {
@@ -61,6 +62,7 @@ export class NotesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ default: { limit: 5, ttl: 60 * 1000 } })
   @Patch(':id')
   async updateNote(
     @Param('id') id: string,
@@ -72,6 +74,7 @@ export class NotesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ default: { limit: 3, ttl: 60 * 1000 } })
   @Delete(':id')
   async deleteNote(@Param('id') id: string, @Request() req) {
     const userId = req.user.id;
@@ -79,6 +82,7 @@ export class NotesController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Throttle({ default: { limit: 10, ttl: 60 * 1000 } })
   @Post()
   async createNote(@Body() data: CreateNoteDto, @Request() req) {
     const userId = req.user.id;

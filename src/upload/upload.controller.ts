@@ -16,8 +16,8 @@ export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
   @Post('image')
-  @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors(UploadInterceptor)
+  @UseInterceptors(FileInterceptor('file'))
   @UseGuards(JwtAuthGuard)
   @Throttle({ default: { limit: 5, ttl: 60 * 1000 } })
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
@@ -27,8 +27,8 @@ export class UploadController {
   }
 
   @Post('video')
-  @UseInterceptors(FileInterceptor('file'))
   @UseInterceptors(UploadInterceptor)
+  @UseInterceptors(FileInterceptor('file'))
   @UseGuards(JwtAuthGuard)
   @Throttle({ default: { limit: 3, ttl: 60 * 1000 } })
   async uploadVideo(@UploadedFile() file: Express.Multer.File) {

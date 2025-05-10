@@ -4,16 +4,23 @@ import {
   IsArray,
   IsOptional,
   ValidateNested,
+  MaxLength,
+  IsEnum,
+  IsUrl,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
 export class CreateNoteDto {
-  @IsString()
   @IsNotEmpty({ message: '标题不能为空' })
+  @IsString({ message: '标题必须是字符串' })
+  @MaxLength(50, { message: '标题长度不能超过50个字符' })
+  @Transform(({ value }) => value.trim())
   title: string;
 
-  @IsString()
   @IsNotEmpty({ message: '内容不能为空' })
+  @IsString({ message: '内容必须是字符串' })
+  @MaxLength(2000, { message: '内容长度不能超过2000个字符' })
+  @Transform(({ value }) => value.trim())
   content: string;
 
   @IsArray()
@@ -23,15 +30,19 @@ export class CreateNoteDto {
   media: MediaDto[];
 }
 export class MediaDto {
-  @IsString()
-  @IsNotEmpty()
+  @IsEnum(['IMAGE', 'VIDEO'], { message: '媒体类型必须是IMAGE或VIDEO' })
   type: 'IMAGE' | 'VIDEO';
 
-  @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: '媒体URL不能为空' })
+  @IsString({ message: '媒体URL必须是字符串' })
+  @IsUrl({}, { message: '请提供有效的媒体URL' })
+  @MaxLength(300, { message: '媒体URL长度不能超过300个字符' })
   url: string;
 
   @IsString()
   @IsOptional()
+  @IsString({ message: '缩略图URL必须是字符串' })
+  @IsUrl({}, { message: '请提供有效的缩略图URL' })
+  @MaxLength(300, { message: '缩略图URL长度不能超过300个字符' })
   thumbnailUrl?: string;
 }

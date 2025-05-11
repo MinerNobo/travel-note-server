@@ -10,10 +10,9 @@ export function CatchException(loggerContext?: string): MethodDecorator {
       try {
         return await originalMethod.apply(this, args);
       } catch (error) {
-        // 详细日志记录
         logger.error(`Error in ${propertyKey}`, error.stack);
 
-        // 保留原始错误信息和堆栈跟踪
+        // 原始错误信息和堆栈跟踪
         const enhancedError = new Error(error.message);
         enhancedError.name = error.name;
         enhancedError.stack = error.stack;
@@ -25,7 +24,6 @@ export function CatchException(loggerContext?: string): MethodDecorator {
           }
         }
 
-        // 对于文件系统相关错误，提供更具体的错误信息
         if (error.code) {
           switch (error.code) {
             case 'ENOENT':
@@ -40,12 +38,11 @@ export function CatchException(loggerContext?: string): MethodDecorator {
           }
         }
 
-        // 对于 FFmpeg 相关错误，提供更详细的错误描述
+        // FFmpeg
         if (propertyKey === 'uploadVideo' && error.message.includes('ffmpeg')) {
           enhancedError.message = `视频处理失败：${error.message}`;
         }
 
-        // 抛出增强的错误
         throw enhancedError;
       }
     };

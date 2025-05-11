@@ -7,8 +7,9 @@ import { UploadModule } from './upload/upload.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma.module';
 import { ReviewModule } from './review/review.module';
-import { NotificationModule } from './notification/notification.module';
+import { NotificationModule } from './notifications/notification.module';
 import { CustomThrottlerModule } from './common/throttler/throttler.module';
+import { CheckInModule } from './check-in/check-in.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CustomThrottlerModule } from './common/throttler/throttler.module';
       isGlobal: true,
     }),
     CustomThrottlerModule,
+    CheckInModule,
     PrismaModule,
     NotesModule,
     UploadModule,

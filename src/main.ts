@@ -1,12 +1,12 @@
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
+import { join } from 'path';
+import { AppModule } from './app.module';
+import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -51,11 +51,19 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      forbidNonWhitelisted: true,
+      forbidNonWhitelisted: false,
       transform: true,
-      validationError: {
-        target: false,
-        value: false,
+      exceptionFactory: (errors) => {
+        const formattedErrors = errors.map((error) => ({
+          field: error.property,
+          constraints: Object.values(error.constraints || {}),
+        }));
+
+        return new BadRequestException({
+          statusCode: 400,
+          message: '参数验证失败',
+          errors: formattedErrors,
+        });
       },
     }),
   );

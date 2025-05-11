@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma.service';
 import { ReviewListQueryDto } from './dto/review-list-query.dto';
 import { RejectReviewDto } from './dto/review-action.dto';
 import { NotesService } from 'src/notes/notes.service';
-import { NotificationService } from 'src/notification/notification.service';
+import { NotificationService } from 'src/notifications/notification.service';
 import { NoteStatus, NotificationType } from 'generated/prisma';
 import { CatchException } from 'src/common/decorators/catch-exception.decorator';
 

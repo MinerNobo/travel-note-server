@@ -24,6 +24,7 @@ model User {
   role          UserRole       @default(USER)
   notes         TravelNote[]
   notifications Notification[]
+  checkIns      CheckIn[]
 }
 
 model TravelNote {
@@ -93,4 +94,16 @@ model Notification {
   isRead          Boolean          @default(false) @map("is_read")
   createdAt       DateTime         @default(now()) @map("created_at")
   updatedAt       DateTime         @updatedAt @map("updated_at")
+}
+
+model CheckIn {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+  cityName    String   @map("city_name")
+  latitude    Float
+  longitude   Float
+  checkInTime DateTime @default(now()) @map("check_in_time")
+
+  @@index([userId])
 }

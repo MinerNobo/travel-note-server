@@ -38,6 +38,11 @@ export type TokenBlacklist = $Result.DefaultSelection<Prisma.$TokenBlacklistPayl
  * 
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+/**
+ * Model CheckIn
+ * 
+ */
+export type CheckIn = $Result.DefaultSelection<Prisma.$CheckInPayload>
 
 /**
  * Enums
@@ -271,6 +276,16 @@ export class PrismaClient<
     * ```
     */
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.checkIn`: Exposes CRUD operations for the **CheckIn** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CheckIns
+    * const checkIns = await prisma.checkIn.findMany()
+    * ```
+    */
+  get checkIn(): Prisma.CheckInDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -715,7 +730,8 @@ export namespace Prisma {
     TravelNote: 'TravelNote',
     Media: 'Media',
     TokenBlacklist: 'TokenBlacklist',
-    Notification: 'Notification'
+    Notification: 'Notification',
+    CheckIn: 'CheckIn'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -734,7 +750,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "travelNote" | "media" | "tokenBlacklist" | "notification"
+      modelProps: "user" | "travelNote" | "media" | "tokenBlacklist" | "notification" | "checkIn"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1068,6 +1084,72 @@ export namespace Prisma {
           }
         }
       }
+      CheckIn: {
+        payload: Prisma.$CheckInPayload<ExtArgs>
+        fields: Prisma.CheckInFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CheckInFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CheckInFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          findFirst: {
+            args: Prisma.CheckInFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CheckInFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          findMany: {
+            args: Prisma.CheckInFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>[]
+          }
+          create: {
+            args: Prisma.CheckInCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          createMany: {
+            args: Prisma.CheckInCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CheckInDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          update: {
+            args: Prisma.CheckInUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          deleteMany: {
+            args: Prisma.CheckInDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CheckInUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CheckInUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CheckInPayload>
+          }
+          aggregate: {
+            args: Prisma.CheckInAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCheckIn>
+          }
+          groupBy: {
+            args: Prisma.CheckInGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CheckInGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CheckInCountArgs<ExtArgs>
+            result: $Utils.Optional<CheckInCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1157,6 +1239,7 @@ export namespace Prisma {
     media?: MediaOmit
     tokenBlacklist?: TokenBlacklistOmit
     notification?: NotificationOmit
+    checkIn?: CheckInOmit
   }
 
   /* Types for Logging */
@@ -1253,11 +1336,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     notes: number
     notifications: number
+    checkIns: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notes?: boolean | UserCountOutputTypeCountNotesArgs
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+    checkIns?: boolean | UserCountOutputTypeCountCheckInsArgs
   }
 
   // Custom InputTypes
@@ -1283,6 +1368,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCheckInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckInWhereInput
   }
 
 
@@ -1503,6 +1595,7 @@ export namespace Prisma {
     role?: boolean
     notes?: boolean | User$notesArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    checkIns?: boolean | User$checkInsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1522,6 +1615,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notes?: boolean | User$notesArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    checkIns?: boolean | User$checkInsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1530,6 +1624,7 @@ export namespace Prisma {
     objects: {
       notes: Prisma.$TravelNotePayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      checkIns: Prisma.$CheckInPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1881,6 +1976,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     notes<T extends User$notesArgs<ExtArgs> = {}>(args?: Subset<T, User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TravelNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checkIns<T extends User$checkInsArgs<ExtArgs> = {}>(args?: Subset<T, User$checkInsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2305,6 +2401,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * User.checkIns
+   */
+  export type User$checkInsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    where?: CheckInWhereInput
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    cursor?: CheckInWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
   }
 
   /**
@@ -6114,6 +6234,984 @@ export namespace Prisma {
 
 
   /**
+   * Model CheckIn
+   */
+
+  export type AggregateCheckIn = {
+    _count: CheckInCountAggregateOutputType | null
+    _avg: CheckInAvgAggregateOutputType | null
+    _sum: CheckInSumAggregateOutputType | null
+    _min: CheckInMinAggregateOutputType | null
+    _max: CheckInMaxAggregateOutputType | null
+  }
+
+  export type CheckInAvgAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type CheckInSumAggregateOutputType = {
+    latitude: number | null
+    longitude: number | null
+  }
+
+  export type CheckInMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    cityName: string | null
+    latitude: number | null
+    longitude: number | null
+    checkInTime: Date | null
+  }
+
+  export type CheckInMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    cityName: string | null
+    latitude: number | null
+    longitude: number | null
+    checkInTime: Date | null
+  }
+
+  export type CheckInCountAggregateOutputType = {
+    id: number
+    userId: number
+    cityName: number
+    latitude: number
+    longitude: number
+    checkInTime: number
+    _all: number
+  }
+
+
+  export type CheckInAvgAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type CheckInSumAggregateInputType = {
+    latitude?: true
+    longitude?: true
+  }
+
+  export type CheckInMinAggregateInputType = {
+    id?: true
+    userId?: true
+    cityName?: true
+    latitude?: true
+    longitude?: true
+    checkInTime?: true
+  }
+
+  export type CheckInMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    cityName?: true
+    latitude?: true
+    longitude?: true
+    checkInTime?: true
+  }
+
+  export type CheckInCountAggregateInputType = {
+    id?: true
+    userId?: true
+    cityName?: true
+    latitude?: true
+    longitude?: true
+    checkInTime?: true
+    _all?: true
+  }
+
+  export type CheckInAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckIn to aggregate.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CheckIns
+    **/
+    _count?: true | CheckInCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CheckInAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CheckInSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CheckInMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CheckInMaxAggregateInputType
+  }
+
+  export type GetCheckInAggregateType<T extends CheckInAggregateArgs> = {
+        [P in keyof T & keyof AggregateCheckIn]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCheckIn[P]>
+      : GetScalarType<T[P], AggregateCheckIn[P]>
+  }
+
+
+
+
+  export type CheckInGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CheckInWhereInput
+    orderBy?: CheckInOrderByWithAggregationInput | CheckInOrderByWithAggregationInput[]
+    by: CheckInScalarFieldEnum[] | CheckInScalarFieldEnum
+    having?: CheckInScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CheckInCountAggregateInputType | true
+    _avg?: CheckInAvgAggregateInputType
+    _sum?: CheckInSumAggregateInputType
+    _min?: CheckInMinAggregateInputType
+    _max?: CheckInMaxAggregateInputType
+  }
+
+  export type CheckInGroupByOutputType = {
+    id: string
+    userId: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime: Date
+    _count: CheckInCountAggregateOutputType | null
+    _avg: CheckInAvgAggregateOutputType | null
+    _sum: CheckInSumAggregateOutputType | null
+    _min: CheckInMinAggregateOutputType | null
+    _max: CheckInMaxAggregateOutputType | null
+  }
+
+  type GetCheckInGroupByPayload<T extends CheckInGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CheckInGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CheckInGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CheckInGroupByOutputType[P]>
+            : GetScalarType<T[P], CheckInGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CheckInSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    cityName?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    checkInTime?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checkIn"]>
+
+
+
+  export type CheckInSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    cityName?: boolean
+    latitude?: boolean
+    longitude?: boolean
+    checkInTime?: boolean
+  }
+
+  export type CheckInOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "cityName" | "latitude" | "longitude" | "checkInTime", ExtArgs["result"]["checkIn"]>
+  export type CheckInInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CheckInPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CheckIn"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      cityName: string
+      latitude: number
+      longitude: number
+      checkInTime: Date
+    }, ExtArgs["result"]["checkIn"]>
+    composites: {}
+  }
+
+  type CheckInGetPayload<S extends boolean | null | undefined | CheckInDefaultArgs> = $Result.GetResult<Prisma.$CheckInPayload, S>
+
+  type CheckInCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CheckInFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CheckInCountAggregateInputType | true
+    }
+
+  export interface CheckInDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CheckIn'], meta: { name: 'CheckIn' } }
+    /**
+     * Find zero or one CheckIn that matches the filter.
+     * @param {CheckInFindUniqueArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CheckInFindUniqueArgs>(args: SelectSubset<T, CheckInFindUniqueArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CheckIn that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CheckInFindUniqueOrThrowArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CheckInFindUniqueOrThrowArgs>(args: SelectSubset<T, CheckInFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheckIn that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindFirstArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CheckInFindFirstArgs>(args?: SelectSubset<T, CheckInFindFirstArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CheckIn that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindFirstOrThrowArgs} args - Arguments to find a CheckIn
+     * @example
+     * // Get one CheckIn
+     * const checkIn = await prisma.checkIn.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CheckInFindFirstOrThrowArgs>(args?: SelectSubset<T, CheckInFindFirstOrThrowArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CheckIns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CheckIns
+     * const checkIns = await prisma.checkIn.findMany()
+     * 
+     * // Get first 10 CheckIns
+     * const checkIns = await prisma.checkIn.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checkInWithIdOnly = await prisma.checkIn.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CheckInFindManyArgs>(args?: SelectSubset<T, CheckInFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CheckIn.
+     * @param {CheckInCreateArgs} args - Arguments to create a CheckIn.
+     * @example
+     * // Create one CheckIn
+     * const CheckIn = await prisma.checkIn.create({
+     *   data: {
+     *     // ... data to create a CheckIn
+     *   }
+     * })
+     * 
+     */
+    create<T extends CheckInCreateArgs>(args: SelectSubset<T, CheckInCreateArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CheckIns.
+     * @param {CheckInCreateManyArgs} args - Arguments to create many CheckIns.
+     * @example
+     * // Create many CheckIns
+     * const checkIn = await prisma.checkIn.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CheckInCreateManyArgs>(args?: SelectSubset<T, CheckInCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a CheckIn.
+     * @param {CheckInDeleteArgs} args - Arguments to delete one CheckIn.
+     * @example
+     * // Delete one CheckIn
+     * const CheckIn = await prisma.checkIn.delete({
+     *   where: {
+     *     // ... filter to delete one CheckIn
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CheckInDeleteArgs>(args: SelectSubset<T, CheckInDeleteArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CheckIn.
+     * @param {CheckInUpdateArgs} args - Arguments to update one CheckIn.
+     * @example
+     * // Update one CheckIn
+     * const checkIn = await prisma.checkIn.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CheckInUpdateArgs>(args: SelectSubset<T, CheckInUpdateArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CheckIns.
+     * @param {CheckInDeleteManyArgs} args - Arguments to filter CheckIns to delete.
+     * @example
+     * // Delete a few CheckIns
+     * const { count } = await prisma.checkIn.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CheckInDeleteManyArgs>(args?: SelectSubset<T, CheckInDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CheckIns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CheckIns
+     * const checkIn = await prisma.checkIn.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CheckInUpdateManyArgs>(args: SelectSubset<T, CheckInUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CheckIn.
+     * @param {CheckInUpsertArgs} args - Arguments to update or create a CheckIn.
+     * @example
+     * // Update or create a CheckIn
+     * const checkIn = await prisma.checkIn.upsert({
+     *   create: {
+     *     // ... data to create a CheckIn
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CheckIn we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CheckInUpsertArgs>(args: SelectSubset<T, CheckInUpsertArgs<ExtArgs>>): Prisma__CheckInClient<$Result.GetResult<Prisma.$CheckInPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CheckIns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInCountArgs} args - Arguments to filter CheckIns to count.
+     * @example
+     * // Count the number of CheckIns
+     * const count = await prisma.checkIn.count({
+     *   where: {
+     *     // ... the filter for the CheckIns we want to count
+     *   }
+     * })
+    **/
+    count<T extends CheckInCountArgs>(
+      args?: Subset<T, CheckInCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CheckInCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CheckIn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CheckInAggregateArgs>(args: Subset<T, CheckInAggregateArgs>): Prisma.PrismaPromise<GetCheckInAggregateType<T>>
+
+    /**
+     * Group by CheckIn.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CheckInGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CheckInGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CheckInGroupByArgs['orderBy'] }
+        : { orderBy?: CheckInGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CheckInGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCheckInGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CheckIn model
+   */
+  readonly fields: CheckInFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CheckIn.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CheckInClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CheckIn model
+   */
+  interface CheckInFieldRefs {
+    readonly id: FieldRef<"CheckIn", 'String'>
+    readonly userId: FieldRef<"CheckIn", 'String'>
+    readonly cityName: FieldRef<"CheckIn", 'String'>
+    readonly latitude: FieldRef<"CheckIn", 'Float'>
+    readonly longitude: FieldRef<"CheckIn", 'Float'>
+    readonly checkInTime: FieldRef<"CheckIn", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CheckIn findUnique
+   */
+  export type CheckInFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn findUniqueOrThrow
+   */
+  export type CheckInFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn findFirst
+   */
+  export type CheckInFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckIns.
+     */
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn findFirstOrThrow
+   */
+  export type CheckInFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckIn to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CheckIns.
+     */
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn findMany
+   */
+  export type CheckInFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter, which CheckIns to fetch.
+     */
+    where?: CheckInWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CheckIns to fetch.
+     */
+    orderBy?: CheckInOrderByWithRelationInput | CheckInOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CheckIns.
+     */
+    cursor?: CheckInWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CheckIns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CheckIns.
+     */
+    skip?: number
+    distinct?: CheckInScalarFieldEnum | CheckInScalarFieldEnum[]
+  }
+
+  /**
+   * CheckIn create
+   */
+  export type CheckInCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CheckIn.
+     */
+    data: XOR<CheckInCreateInput, CheckInUncheckedCreateInput>
+  }
+
+  /**
+   * CheckIn createMany
+   */
+  export type CheckInCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CheckIns.
+     */
+    data: CheckInCreateManyInput | CheckInCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CheckIn update
+   */
+  export type CheckInUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CheckIn.
+     */
+    data: XOR<CheckInUpdateInput, CheckInUncheckedUpdateInput>
+    /**
+     * Choose, which CheckIn to update.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn updateMany
+   */
+  export type CheckInUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CheckIns.
+     */
+    data: XOR<CheckInUpdateManyMutationInput, CheckInUncheckedUpdateManyInput>
+    /**
+     * Filter which CheckIns to update
+     */
+    where?: CheckInWhereInput
+    /**
+     * Limit how many CheckIns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheckIn upsert
+   */
+  export type CheckInUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CheckIn to update in case it exists.
+     */
+    where: CheckInWhereUniqueInput
+    /**
+     * In case the CheckIn found by the `where` argument doesn't exist, create a new CheckIn with this data.
+     */
+    create: XOR<CheckInCreateInput, CheckInUncheckedCreateInput>
+    /**
+     * In case the CheckIn was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CheckInUpdateInput, CheckInUncheckedUpdateInput>
+  }
+
+  /**
+   * CheckIn delete
+   */
+  export type CheckInDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+    /**
+     * Filter which CheckIn to delete.
+     */
+    where: CheckInWhereUniqueInput
+  }
+
+  /**
+   * CheckIn deleteMany
+   */
+  export type CheckInDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CheckIns to delete
+     */
+    where?: CheckInWhereInput
+    /**
+     * Limit how many CheckIns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CheckIn without action
+   */
+  export type CheckInDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CheckIn
+     */
+    select?: CheckInSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CheckIn
+     */
+    omit?: CheckInOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CheckInInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6192,6 +7290,18 @@ export namespace Prisma {
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+  export const CheckInScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    cityName: 'cityName',
+    latitude: 'latitude',
+    longitude: 'longitude',
+    checkInTime: 'checkInTime'
+  };
+
+  export type CheckInScalarFieldEnum = (typeof CheckInScalarFieldEnum)[keyof typeof CheckInScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -6257,6 +7367,15 @@ export namespace Prisma {
   export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum]
 
 
+  export const CheckInOrderByRelevanceFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    cityName: 'cityName'
+  };
+
+  export type CheckInOrderByRelevanceFieldEnum = (typeof CheckInOrderByRelevanceFieldEnum)[keyof typeof CheckInOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -6312,6 +7431,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -6334,6 +7460,7 @@ export namespace Prisma {
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     notes?: TravelNoteListRelationFilter
     notifications?: NotificationListRelationFilter
+    checkIns?: CheckInListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -6346,6 +7473,7 @@ export namespace Prisma {
     role?: SortOrder
     notes?: TravelNoteOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
+    checkIns?: CheckInOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -6362,6 +7490,7 @@ export namespace Prisma {
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     notes?: TravelNoteListRelationFilter
     notifications?: NotificationListRelationFilter
+    checkIns?: CheckInListRelationFilter
   }, "id" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -6654,6 +7783,69 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
 
+  export type CheckInWhereInput = {
+    AND?: CheckInWhereInput | CheckInWhereInput[]
+    OR?: CheckInWhereInput[]
+    NOT?: CheckInWhereInput | CheckInWhereInput[]
+    id?: StringFilter<"CheckIn"> | string
+    userId?: StringFilter<"CheckIn"> | string
+    cityName?: StringFilter<"CheckIn"> | string
+    latitude?: FloatFilter<"CheckIn"> | number
+    longitude?: FloatFilter<"CheckIn"> | number
+    checkInTime?: DateTimeFilter<"CheckIn"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CheckInOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cityName?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    checkInTime?: SortOrder
+    user?: UserOrderByWithRelationInput
+    _relevance?: CheckInOrderByRelevanceInput
+  }
+
+  export type CheckInWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CheckInWhereInput | CheckInWhereInput[]
+    OR?: CheckInWhereInput[]
+    NOT?: CheckInWhereInput | CheckInWhereInput[]
+    userId?: StringFilter<"CheckIn"> | string
+    cityName?: StringFilter<"CheckIn"> | string
+    latitude?: FloatFilter<"CheckIn"> | number
+    longitude?: FloatFilter<"CheckIn"> | number
+    checkInTime?: DateTimeFilter<"CheckIn"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CheckInOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cityName?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    checkInTime?: SortOrder
+    _count?: CheckInCountOrderByAggregateInput
+    _avg?: CheckInAvgOrderByAggregateInput
+    _max?: CheckInMaxOrderByAggregateInput
+    _min?: CheckInMinOrderByAggregateInput
+    _sum?: CheckInSumOrderByAggregateInput
+  }
+
+  export type CheckInScalarWhereWithAggregatesInput = {
+    AND?: CheckInScalarWhereWithAggregatesInput | CheckInScalarWhereWithAggregatesInput[]
+    OR?: CheckInScalarWhereWithAggregatesInput[]
+    NOT?: CheckInScalarWhereWithAggregatesInput | CheckInScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CheckIn"> | string
+    userId?: StringWithAggregatesFilter<"CheckIn"> | string
+    cityName?: StringWithAggregatesFilter<"CheckIn"> | string
+    latitude?: FloatWithAggregatesFilter<"CheckIn"> | number
+    longitude?: FloatWithAggregatesFilter<"CheckIn"> | number
+    checkInTime?: DateTimeWithAggregatesFilter<"CheckIn"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     username: string
@@ -6664,6 +7856,7 @@ export namespace Prisma {
     role?: $Enums.UserRole
     notes?: TravelNoteCreateNestedManyWithoutAuthorInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    checkIns?: CheckInCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6676,6 +7869,7 @@ export namespace Prisma {
     role?: $Enums.UserRole
     notes?: TravelNoteUncheckedCreateNestedManyWithoutAuthorInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    checkIns?: CheckInUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6688,6 +7882,7 @@ export namespace Prisma {
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notes?: TravelNoteUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    checkIns?: CheckInUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6700,6 +7895,7 @@ export namespace Prisma {
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notes?: TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    checkIns?: CheckInUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7013,6 +8209,68 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CheckInCreateInput = {
+    id?: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
+    user: UserCreateNestedOneWithoutCheckInsInput
+  }
+
+  export type CheckInUncheckedCreateInput = {
+    id?: string
+    userId: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
+  }
+
+  export type CheckInUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCheckInsNestedInput
+  }
+
+  export type CheckInUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInCreateManyInput = {
+    id?: string
+    userId: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
+  }
+
+  export type CheckInUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -7073,6 +8331,12 @@ export namespace Prisma {
     none?: NotificationWhereInput
   }
 
+  export type CheckInListRelationFilter = {
+    every?: CheckInWhereInput
+    some?: CheckInWhereInput
+    none?: CheckInWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -7083,6 +8347,10 @@ export namespace Prisma {
   }
 
   export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CheckInOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7410,6 +8678,76 @@ export namespace Prisma {
     _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type CheckInOrderByRelevanceInput = {
+    fields: CheckInOrderByRelevanceFieldEnum | CheckInOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CheckInCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cityName?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    checkInTime?: SortOrder
+  }
+
+  export type CheckInAvgOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type CheckInMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cityName?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    checkInTime?: SortOrder
+  }
+
+  export type CheckInMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    cityName?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
+    checkInTime?: SortOrder
+  }
+
+  export type CheckInSumOrderByAggregateInput = {
+    latitude?: SortOrder
+    longitude?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type TravelNoteCreateNestedManyWithoutAuthorInput = {
     create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
@@ -7424,6 +8762,13 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
+  export type CheckInCreateNestedManyWithoutUserInput = {
+    create?: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput> | CheckInCreateWithoutUserInput[] | CheckInUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckInCreateOrConnectWithoutUserInput | CheckInCreateOrConnectWithoutUserInput[]
+    createMany?: CheckInCreateManyUserInputEnvelope
+    connect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+  }
+
   export type TravelNoteUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
@@ -7436,6 +8781,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
     createMany?: NotificationCreateManyUserInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type CheckInUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput> | CheckInCreateWithoutUserInput[] | CheckInUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckInCreateOrConnectWithoutUserInput | CheckInCreateOrConnectWithoutUserInput[]
+    createMany?: CheckInCreateManyUserInputEnvelope
+    connect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7482,6 +8834,20 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type CheckInUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput> | CheckInCreateWithoutUserInput[] | CheckInUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckInCreateOrConnectWithoutUserInput | CheckInCreateOrConnectWithoutUserInput[]
+    upsert?: CheckInUpsertWithWhereUniqueWithoutUserInput | CheckInUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CheckInCreateManyUserInputEnvelope
+    set?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    disconnect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    delete?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    connect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    update?: CheckInUpdateWithWhereUniqueWithoutUserInput | CheckInUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CheckInUpdateManyWithWhereWithoutUserInput | CheckInUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CheckInScalarWhereInput | CheckInScalarWhereInput[]
+  }
+
   export type TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<TravelNoteCreateWithoutAuthorInput, TravelNoteUncheckedCreateWithoutAuthorInput> | TravelNoteCreateWithoutAuthorInput[] | TravelNoteUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: TravelNoteCreateOrConnectWithoutAuthorInput | TravelNoteCreateOrConnectWithoutAuthorInput[]
@@ -7508,6 +8874,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type CheckInUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput> | CheckInCreateWithoutUserInput[] | CheckInUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CheckInCreateOrConnectWithoutUserInput | CheckInCreateOrConnectWithoutUserInput[]
+    upsert?: CheckInUpsertWithWhereUniqueWithoutUserInput | CheckInUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CheckInCreateManyUserInputEnvelope
+    set?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    disconnect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    delete?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    connect?: CheckInWhereUniqueInput | CheckInWhereUniqueInput[]
+    update?: CheckInUpdateWithWhereUniqueWithoutUserInput | CheckInUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CheckInUpdateManyWithWhereWithoutUserInput | CheckInUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CheckInScalarWhereInput | CheckInScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutNotesInput = {
@@ -7608,6 +8988,28 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutNotificationsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCheckInsInput = {
+    create?: XOR<UserCreateWithoutCheckInsInput, UserUncheckedCreateWithoutCheckInsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheckInsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutCheckInsNestedInput = {
+    create?: XOR<UserCreateWithoutCheckInsInput, UserUncheckedCreateWithoutCheckInsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCheckInsInput
+    upsert?: UserUpsertWithoutCheckInsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCheckInsInput, UserUpdateWithoutCheckInsInput>, UserUncheckedUpdateWithoutCheckInsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7804,6 +9206,33 @@ export namespace Prisma {
     _max?: NestedEnumNotificationTypeFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type TravelNoteCreateWithoutAuthorInput = {
     id?: string
     title: string
@@ -7868,6 +9297,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CheckInCreateWithoutUserInput = {
+    id?: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
+  }
+
+  export type CheckInUncheckedCreateWithoutUserInput = {
+    id?: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
+  }
+
+  export type CheckInCreateOrConnectWithoutUserInput = {
+    where: CheckInWhereUniqueInput
+    create: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput>
+  }
+
+  export type CheckInCreateManyUserInputEnvelope = {
+    data: CheckInCreateManyUserInput | CheckInCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TravelNoteUpsertWithWhereUniqueWithoutAuthorInput = {
     where: TravelNoteWhereUniqueInput
     update: XOR<TravelNoteUpdateWithoutAuthorInput, TravelNoteUncheckedUpdateWithoutAuthorInput>
@@ -7929,6 +9384,34 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
+  export type CheckInUpsertWithWhereUniqueWithoutUserInput = {
+    where: CheckInWhereUniqueInput
+    update: XOR<CheckInUpdateWithoutUserInput, CheckInUncheckedUpdateWithoutUserInput>
+    create: XOR<CheckInCreateWithoutUserInput, CheckInUncheckedCreateWithoutUserInput>
+  }
+
+  export type CheckInUpdateWithWhereUniqueWithoutUserInput = {
+    where: CheckInWhereUniqueInput
+    data: XOR<CheckInUpdateWithoutUserInput, CheckInUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CheckInUpdateManyWithWhereWithoutUserInput = {
+    where: CheckInScalarWhereInput
+    data: XOR<CheckInUpdateManyMutationInput, CheckInUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CheckInScalarWhereInput = {
+    AND?: CheckInScalarWhereInput | CheckInScalarWhereInput[]
+    OR?: CheckInScalarWhereInput[]
+    NOT?: CheckInScalarWhereInput | CheckInScalarWhereInput[]
+    id?: StringFilter<"CheckIn"> | string
+    userId?: StringFilter<"CheckIn"> | string
+    cityName?: StringFilter<"CheckIn"> | string
+    latitude?: FloatFilter<"CheckIn"> | number
+    longitude?: FloatFilter<"CheckIn"> | number
+    checkInTime?: DateTimeFilter<"CheckIn"> | Date | string
+  }
+
   export type UserCreateWithoutNotesInput = {
     id?: string
     username: string
@@ -7938,6 +9421,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     role?: $Enums.UserRole
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    checkIns?: CheckInCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -7949,6 +9433,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     role?: $Enums.UserRole
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    checkIns?: CheckInUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -8004,6 +9489,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    checkIns?: CheckInUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -8015,6 +9501,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    checkIns?: CheckInUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MediaUpsertWithWhereUniqueWithoutTravelNoteInput = {
@@ -8119,6 +9606,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     role?: $Enums.UserRole
     notes?: TravelNoteCreateNestedManyWithoutAuthorInput
+    checkIns?: CheckInCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -8130,6 +9618,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     role?: $Enums.UserRole
     notes?: TravelNoteUncheckedCreateNestedManyWithoutAuthorInput
+    checkIns?: CheckInUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -8157,6 +9646,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notes?: TravelNoteUpdateManyWithoutAuthorNestedInput
+    checkIns?: CheckInUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -8168,6 +9658,71 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     notes?: TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput
+    checkIns?: CheckInUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutCheckInsInput = {
+    id?: string
+    username: string
+    password: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+    notes?: TravelNoteCreateNestedManyWithoutAuthorInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCheckInsInput = {
+    id?: string
+    username: string
+    password: string
+    avatarUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    role?: $Enums.UserRole
+    notes?: TravelNoteUncheckedCreateNestedManyWithoutAuthorInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCheckInsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCheckInsInput, UserUncheckedCreateWithoutCheckInsInput>
+  }
+
+  export type UserUpsertWithoutCheckInsInput = {
+    update: XOR<UserUpdateWithoutCheckInsInput, UserUncheckedUpdateWithoutCheckInsInput>
+    create: XOR<UserCreateWithoutCheckInsInput, UserUncheckedCreateWithoutCheckInsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCheckInsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCheckInsInput, UserUncheckedUpdateWithoutCheckInsInput>
+  }
+
+  export type UserUpdateWithoutCheckInsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    notes?: TravelNoteUpdateManyWithoutAuthorNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCheckInsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    notes?: TravelNoteUncheckedUpdateManyWithoutAuthorNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TravelNoteCreateManyAuthorInput = {
@@ -8189,6 +9744,14 @@ export namespace Prisma {
     isRead?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type CheckInCreateManyUserInput = {
+    id?: string
+    cityName: string
+    latitude: number
+    longitude: number
+    checkInTime?: Date | string
   }
 
   export type TravelNoteUpdateWithoutAuthorInput = {
@@ -8254,6 +9817,30 @@ export namespace Prisma {
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CheckInUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cityName?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    checkInTime?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaCreateManyTravelNoteInput = {

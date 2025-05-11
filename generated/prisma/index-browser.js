@@ -170,6 +170,15 @@ exports.Prisma.NotificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CheckInScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  cityName: 'cityName',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  checkInTime: 'checkInTime'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -213,6 +222,12 @@ exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
   content: 'content',
   relatedEntityId: 'relatedEntityId'
 };
+
+exports.Prisma.CheckInOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  cityName: 'cityName'
+};
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   REVIEWER: 'REVIEWER',
@@ -243,7 +258,8 @@ exports.Prisma.ModelName = {
   TravelNote: 'TravelNote',
   Media: 'Media',
   TokenBlacklist: 'TokenBlacklist',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  CheckIn: 'CheckIn'
 };
 
 /**

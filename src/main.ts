@@ -37,8 +37,6 @@ async function bootstrap() {
         'http://localhost:5173', 
         'https://moruka.top',
         'http://moruka.top',
-      `http://${process.env.SERVER_IP ?? ''}`,
-      `https://${process.env.SERVER_IP ?? ''}`,
         'http://124.71.204.101',
         'https://124.71.204.101',
       process.env.FRONTEND_URL ?? ''

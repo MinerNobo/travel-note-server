@@ -470,6 +470,7 @@ export class NotesService {
               },
             },
             media: {
+              where: { type: 'IMAGE' },
               take: 1,
               select: { url: true },
             },
@@ -494,7 +495,7 @@ export class NotesService {
       title: fav.travelNote.title,
       content: fav.travelNote.content,
       author: fav.travelNote.author,
-      firstImage: fav.travelNote.media[0]?.url || null,
+      imageUrl: fav.travelNote.media[0]?.url || null,
       favoriteId: fav.id,
     }));
   

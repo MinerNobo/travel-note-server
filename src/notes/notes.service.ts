@@ -449,67 +449,57 @@ export class NotesService {
 
   @CatchException('NotesService.getUserFavorites')
   async getUserFavorites(userId: string, page = 1, pageSize = 10) {
-    // 查询用户的所有收藏记录
-    const [total, favorites] = await this.prisma.$transaction([
-      this.prisma.favorite.count({
-        where: { userId },
-      }),
-      this.prisma.favorite.findMany({
-        where: { userId },
-        skip: (page - 1) * pageSize,
-        take: pageSize,
-        include: {
-          travelNote: {
-            select: {
-              id: true,
-              title: true,
-              content: true,
-              status: true,
-              isDeleted: true,
-              author: {
-                select: {
-                  id: true,
-                  username: true,
-                  avatarUrl: true,
-                },
+    const favorites = await this.prisma.favorite.findMany({
+      where: { 
+        userId: userId,
+        travelNote: {
+          status: NoteStatus.APPROVED,
+          isDeleted: false
+        }
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+      include: {
+        travelNote: {
+          include: {
+            author: {
+              select: {
+                id: true,
+                username: true,
+                avatarUrl: true,
               },
-              media: {
-                take: 1,
-                select: { url: true },
-              },
+            },
+            media: {
+              take: 1,
+              select: { url: true },
             },
           },
         },
-        orderBy: { createdAt: 'desc' },
-      }),
-    ]);
-
-    favorites.forEach((fav, index) => {
-      this.logger.log(`Favorite ${index + 1}:`, {
-        travelNoteId: fav.travelNoteId,
-        travelNoteStatus: fav.travelNote?.status,
-        travelNoteDeleted: fav.travelNote?.isDeleted,
-      });
+      },
+      orderBy: { createdAt: 'desc' },
     });
-
-    const processedFavorites = favorites
-      .filter(
-        (fav) =>
-          fav.travelNote &&
-          fav.travelNote.status === NoteStatus.APPROVED &&
-          !fav.travelNote.isDeleted,
-      )
-      .map((fav) => ({
-        id: fav.travelNote.id,
-        title: fav.travelNote.title,
-        content: fav.travelNote.content,
-        author: fav.travelNote.author,
-        firstImage: fav.travelNote.media[0]?.url || null,
-        favoriteId: fav.id,
-      }));
-
+  
+    const total = await this.prisma.favorite.count({
+      where: { 
+        userId: userId,
+        travelNote: {
+          status: NoteStatus.APPROVED,
+          isDeleted: false
+        }
+      },
+    });
+  
+    const processedFavorites = favorites.map((fav) => ({
+      id: fav.travelNote.id,
+      title: fav.travelNote.title,
+      content: fav.travelNote.content,
+      author: fav.travelNote.author,
+      firstImage: fav.travelNote.media[0]?.url || null,
+      favoriteId: fav.id,
+    }));
+  
     return {
-      total: processedFavorites.length,
+      total,
       page,
       pageSize,
       data: processedFavorites,

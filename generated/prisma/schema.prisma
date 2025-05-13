@@ -25,6 +25,8 @@ model User {
   notes         TravelNote[]
   notifications Notification[]
   checkIns      CheckIn[]
+  likes         Like[]
+  favorites     Favorite[]
 }
 
 model TravelNote {
@@ -39,6 +41,11 @@ model TravelNote {
   media        Media[]
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
+  viewCount    Int        @default(0) @map("view_count")
+  likeCount    Int        @default(0) @map("like_count")
+
+  likes     Like[]
+  favorites Favorite[]
 }
 
 model Media {
@@ -50,6 +57,32 @@ model Media {
   travelNoteId String     @map("travel_note_id")
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
+}
+
+model Like {
+  id           String     @id @default(uuid())
+  userId       String     @map("user_id")
+  user         User       @relation(fields: [userId], references: [id])
+  travelNoteId String     @map("travel_note_id")
+  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  @@unique([userId, travelNoteId])
+  @@index([userId])
+  @@index([travelNoteId])
+}
+
+model Favorite {
+  id           String     @id @default(uuid())
+  userId       String     @map("user_id")
+  user         User       @relation(fields: [userId], references: [id])
+  travelNoteId String     @map("travel_note_id")
+  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  @@unique([userId, travelNoteId])
+  @@index([userId])
+  @@index([travelNoteId])
 }
 
 model TokenBlacklist {

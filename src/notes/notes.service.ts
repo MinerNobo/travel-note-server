@@ -89,6 +89,7 @@ export class NotesService {
   ) {
     const where: Prisma.TravelNoteWhereInput = {
       status: NoteStatus.APPROVED,
+      isDeleted: false,
       ...(keyword && {
         OR: [
           {
@@ -309,9 +310,12 @@ export class NotesService {
   }
 
   @CatchException('NotesService.getNoteById')
-  async getNoteById(id: string) {
+  async getNoteById(id: string, includeDeleted = false) {
     const note = await this.prisma.travelNote.findUnique({
-      where: { id, isDeleted: false },
+      where: {
+        id,
+        ...(includeDeleted ? {} : { isDeleted: false }),
+      },
       include: {
         author: {
           select: {
@@ -332,9 +336,210 @@ export class NotesService {
     });
 
     if (!note) {
-      throw new BadRequestException('游记不存在');
+      return null;
     }
 
     return note;
+  }
+
+  @CatchException('NotesService.viewNote')
+  async viewNote(noteId: string) {
+    return this.prisma.travelNote.update({
+      where: { id: noteId },
+      data: {
+        viewCount: { increment: 1 },
+      },
+    });
+  }
+
+  @CatchException('NotesService.toggleLike')
+  async toggleLike(userId: string, travelNoteId: string) {
+    const existingLike = await this.prisma.like.findUnique({
+      where: {
+        userId_travelNoteId: {
+          userId,
+          travelNoteId,
+        },
+      },
+    });
+
+    if (existingLike) {
+      // 取消点赞
+      await this.prisma.like.delete({
+        where: {
+          userId_travelNoteId: {
+            userId,
+            travelNoteId,
+          },
+        },
+      });
+
+      return this.prisma.travelNote.update({
+        where: { id: travelNoteId },
+        data: {
+          likeCount: { decrement: 1 },
+        },
+      });
+    } else {
+      // 点赞
+      await this.prisma.like.create({
+        data: {
+          userId,
+          travelNoteId,
+        },
+      });
+
+      return this.prisma.travelNote.update({
+        where: { id: travelNoteId },
+        data: {
+          likeCount: { increment: 1 },
+        },
+      });
+    }
+  }
+
+  @CatchException('NotesService.toggleFavorite')
+  async toggleFavorite(userId: string, travelNoteId: string) {
+    const travelNote = await this.prisma.travelNote.findUnique({
+      where: {
+        id: travelNoteId,
+        status: NoteStatus.APPROVED,
+        isDeleted: false,
+      },
+    });
+
+    if (!travelNote) {
+      throw new BadRequestException('游记不存在或未通过审核');
+    }
+
+    const existingFavorite = await this.prisma.favorite.findUnique({
+      where: {
+        userId_travelNoteId: {
+          userId,
+          travelNoteId,
+        },
+      },
+    });
+
+    if (existingFavorite) {
+      // 取消收藏
+      await this.prisma.favorite.delete({
+        where: {
+          userId_travelNoteId: {
+            userId,
+            travelNoteId,
+          },
+        },
+      });
+    } else {
+      // 收藏
+      await this.prisma.favorite.create({
+        data: {
+          userId,
+          travelNoteId,
+        },
+      });
+    }
+
+    return {
+      success: true,
+      favorited: !existingFavorite,
+    };
+  }
+
+  @CatchException('NotesService.getUserFavorites')
+  async getUserFavorites(userId: string, page = 1, pageSize = 10) {
+    // 查询用户的所有收藏记录
+    const [total, favorites] = await this.prisma.$transaction([
+      this.prisma.favorite.count({
+        where: { userId },
+      }),
+      this.prisma.favorite.findMany({
+        where: { userId },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        include: {
+          travelNote: {
+            select: {
+              id: true,
+              title: true,
+              content: true,
+              status: true,
+              isDeleted: true,
+              author: {
+                select: {
+                  id: true,
+                  username: true,
+                  avatarUrl: true,
+                },
+              },
+              media: {
+                take: 1,
+                select: { url: true },
+              },
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+    ]);
+
+    favorites.forEach((fav, index) => {
+      this.logger.log(`Favorite ${index + 1}:`, {
+        travelNoteId: fav.travelNoteId,
+        travelNoteStatus: fav.travelNote?.status,
+        travelNoteDeleted: fav.travelNote?.isDeleted,
+      });
+    });
+
+    const processedFavorites = favorites
+      .filter(
+        (fav) =>
+          fav.travelNote &&
+          fav.travelNote.status === NoteStatus.APPROVED &&
+          !fav.travelNote.isDeleted,
+      )
+      .map((fav) => ({
+        id: fav.travelNote.id,
+        title: fav.travelNote.title,
+        content: fav.travelNote.content,
+        author: fav.travelNote.author,
+        firstImage: fav.travelNote.media[0]?.url || null,
+        favoriteId: fav.id,
+      }));
+
+    return {
+      total: processedFavorites.length,
+      page,
+      pageSize,
+      data: processedFavorites,
+    };
+  }
+
+  @CatchException('NotesService.getNoteInteractionStatus')
+  async getNoteInteractionStatus(userId: string, travelNoteId: string) {
+    const [liked, favorited] = await Promise.all([
+      this.prisma.like.findUnique({
+        where: {
+          userId_travelNoteId: {
+            userId,
+            travelNoteId,
+          },
+        },
+      }),
+      this.prisma.favorite.findUnique({
+        where: {
+          userId_travelNoteId: {
+            userId,
+            travelNoteId,
+          },
+        },
+      }),
+    ]);
+
+    return {
+      liked: !!liked,
+      favorited: !!favorited,
+    };
   }
 }

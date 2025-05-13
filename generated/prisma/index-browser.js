@@ -139,7 +139,9 @@ exports.Prisma.TravelNoteScalarFieldEnum = {
   isDeleted: 'isDeleted',
   authorId: 'authorId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  viewCount: 'viewCount',
+  likeCount: 'likeCount'
 };
 
 exports.Prisma.MediaScalarFieldEnum = {
@@ -150,6 +152,20 @@ exports.Prisma.MediaScalarFieldEnum = {
   travelNoteId: 'travelNoteId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  travelNoteId: 'travelNoteId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  travelNoteId: 'travelNoteId',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.TokenBlacklistScalarFieldEnum = {
@@ -211,6 +227,18 @@ exports.Prisma.MediaOrderByRelevanceFieldEnum = {
   travelNoteId: 'travelNoteId'
 };
 
+exports.Prisma.LikeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  travelNoteId: 'travelNoteId'
+};
+
+exports.Prisma.FavoriteOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  travelNoteId: 'travelNoteId'
+};
+
 exports.Prisma.TokenBlacklistOrderByRelevanceFieldEnum = {
   id: 'id',
   tokenHash: 'tokenHash'
@@ -257,6 +285,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   TravelNote: 'TravelNote',
   Media: 'Media',
+  Like: 'Like',
+  Favorite: 'Favorite',
   TokenBlacklist: 'TokenBlacklist',
   Notification: 'Notification',
   CheckIn: 'CheckIn'

@@ -9,12 +9,11 @@ import {
   Query,
   Request,
   UseGuards,
-  BadRequestException,
 } from '@nestjs/common';
-import { NotesService } from './notes.service';
-import { CreateNoteDto } from './dto/create-note.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Throttle } from '@nestjs/throttler';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { NotesService } from './notes.service';
 
 @Controller('notes')
 export class NotesController {
@@ -53,12 +52,37 @@ export class NotesController {
     return this.notesService.getUserNotes(req.user.id, pageNum, pageSizeNum);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('favorites')
+  async getUserFavorites(
+    @Request() req,
+    @Query('page') page = '1',
+    @Query('pageSize') pageSize = '10',
+  ) {
+    const pageNum = parseInt(page);
+    const pageSizeNum = parseInt(pageSize);
+    return this.notesService.getUserFavorites(
+      req.user.id,
+      pageNum,
+      pageSizeNum,
+    );
+  }
+
   @Get(':id')
-  async getNoteById(@Param('id') id: string) {
-    if (!id) {
-      throw new BadRequestException('游记ID不能为空');
+  async getNoteById(@Param('id') id: string, @Request() req) {
+    const note = await this.notesService.getNoteById(id);
+
+    if (req.user) {
+      const interactionStatus =
+        await this.notesService.getNoteInteractionStatus(req.user.id, id);
+
+      return {
+        ...note,
+        interactionStatus,
+      };
     }
-    return this.notesService.getNoteById(id);
+
+    return note;
   }
 
   @UseGuards(JwtAuthGuard)
@@ -87,5 +111,35 @@ export class NotesController {
   async createNote(@Body() data: CreateNoteDto, @Request() req) {
     const userId = req.user.id;
     return this.notesService.createNote(userId, data);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/view')
+  async viewNote(@Param('id') id: string) {
+    return this.notesService.viewNote(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/like')
+  async toggleLike(@Param('id') travelNoteId: string, @Request() req) {
+    return this.notesService.toggleLike(req.user.id, travelNoteId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/favorite')
+  async toggleFavorite(@Param('id') travelNoteId: string, @Request() req) {
+    return this.notesService.toggleFavorite(req.user.id, travelNoteId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/interaction-status')
+  async getNoteInteractionStatus(
+    @Param('id') travelNoteId: string,
+    @Request() req,
+  ) {
+    return this.notesService.getNoteInteractionStatus(
+      req.user.id,
+      travelNoteId,
+    );
   }
 }

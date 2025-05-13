@@ -274,7 +274,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "F:\\repository\\tour-app\\travel-note-server\\generated\\prisma",
+      "value": "/root/travel-note-server/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -283,12 +283,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "F:\\repository\\tour-app\\travel-note-server\\prisma\\schema.prisma",
+    "sourceFilePath": "/root/travel-note-server/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -302,16 +306,17 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://nobo:Bc83720%40%40!@124.71.204.101:3306/travel_note_db"
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String         @id @default(uuid())\n  username      String         @unique\n  password      String\n  avatarUrl     String?        @map(\"avatar_url\")\n  createdAt     DateTime       @default(now()) @map(\"created_at\")\n  updatedAt     DateTime       @updatedAt @map(\"updated_at\")\n  role          UserRole       @default(USER)\n  notes         TravelNote[]\n  notifications Notification[]\n  checkIns      CheckIn[]\n  likes         Like[]\n  favorites     Favorite[]\n}\n\nmodel TravelNote {\n  id           String     @id @default(uuid())\n  title        String\n  content      String\n  status       NoteStatus @default(PENDING)\n  rejectReason String?    @map(\"reject_reason\")\n  isDeleted    Boolean    @default(false) @map(\"is_deleted\")\n  author       User       @relation(fields: [authorId], references: [id])\n  authorId     String     @map(\"author_id\")\n  media        Media[]\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n  updatedAt    DateTime   @updatedAt @map(\"updated_at\")\n  viewCount    Int        @default(0) @map(\"view_count\")\n  likeCount    Int        @default(0) @map(\"like_count\")\n\n  likes     Like[]\n  favorites Favorite[]\n}\n\nmodel Media {\n  id           String     @id @default(uuid())\n  type         MediaType\n  url          String\n  thumbnailUrl String?    @map(\"thumbnail_url\")\n  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)\n  travelNoteId String     @map(\"travel_note_id\")\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n  updatedAt    DateTime   @updatedAt @map(\"updated_at\")\n}\n\nmodel Like {\n  id           String     @id @default(uuid())\n  userId       String     @map(\"user_id\")\n  user         User       @relation(fields: [userId], references: [id])\n  travelNoteId String     @map(\"travel_note_id\")\n  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n\n  @@unique([userId, travelNoteId])\n  @@index([userId])\n  @@index([travelNoteId])\n}\n\nmodel Favorite {\n  id           String     @id @default(uuid())\n  userId       String     @map(\"user_id\")\n  user         User       @relation(fields: [userId], references: [id])\n  travelNoteId String     @map(\"travel_note_id\")\n  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n\n  @@unique([userId, travelNoteId])\n  @@index([userId])\n  @@index([travelNoteId])\n}\n\nmodel TokenBlacklist {\n  id        String   @id @default(uuid())\n  tokenHash String   @unique @map(\"token_hash\")\n  expiresAt DateTime @map(\"expires_at\")\n  createdAt DateTime @default(now()) @map(\"created_at\")\n}\n\nenum NoteStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\nenum UserRole {\n  USER\n  REVIEWER\n  ADMIN\n}\n\nenum MediaType {\n  IMAGE\n  VIDEO\n}\n\nenum NotificationType {\n  NOTE_APPROVED\n  NOTE_REJECTED\n  NOTE_DELETED\n  COMMENT_RECEIVED\n  SYSTEM_ALERT\n}\n\nmodel Notification {\n  id              String           @id @default(uuid())\n  userId          String           @map(\"user_id\")\n  user            User             @relation(fields: [userId], references: [id])\n  type            NotificationType\n  content         String\n  relatedEntityId String?          @map(\"related_entity_id\")\n  isRead          Boolean          @default(false) @map(\"is_read\")\n  createdAt       DateTime         @default(now()) @map(\"created_at\")\n  updatedAt       DateTime         @updatedAt @map(\"updated_at\")\n}\n\nmodel CheckIn {\n  id          String   @id @default(uuid())\n  userId      String   @map(\"user_id\")\n  user        User     @relation(fields: [userId], references: [id])\n  cityName    String   @map(\"city_name\")\n  latitude    Float\n  longitude   Float\n  checkInTime DateTime @default(now()) @map(\"check_in_time\")\n\n  @@index([userId])\n}\n",
-  "inlineSchemaHash": "6d695ec6cfba9837bffcacf37c77bc4f154a908ab4c52288f792d607d7cefd3c",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"debian-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id            String         @id @default(uuid())\n  username      String         @unique\n  password      String\n  avatarUrl     String?        @map(\"avatar_url\")\n  createdAt     DateTime       @default(now()) @map(\"created_at\")\n  updatedAt     DateTime       @updatedAt @map(\"updated_at\")\n  role          UserRole       @default(USER)\n  notes         TravelNote[]\n  notifications Notification[]\n  checkIns      CheckIn[]\n}\n\nmodel TravelNote {\n  id           String     @id @default(uuid())\n  title        String\n  content      String\n  status       NoteStatus @default(PENDING)\n  rejectReason String?    @map(\"reject_reason\")\n  isDeleted    Boolean    @default(false) @map(\"is_deleted\")\n  author       User       @relation(fields: [authorId], references: [id])\n  authorId     String     @map(\"author_id\")\n  media        Media[]\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n  updatedAt    DateTime   @updatedAt @map(\"updated_at\")\n}\n\nmodel Media {\n  id           String     @id @default(uuid())\n  type         MediaType\n  url          String\n  thumbnailUrl String?    @map(\"thumbnail_url\")\n  travelNote   TravelNote @relation(fields: [travelNoteId], references: [id], onDelete: Cascade)\n  travelNoteId String     @map(\"travel_note_id\")\n  createdAt    DateTime   @default(now()) @map(\"created_at\")\n  updatedAt    DateTime   @updatedAt @map(\"updated_at\")\n}\n\nmodel TokenBlacklist {\n  id        String   @id @default(uuid())\n  tokenHash String   @unique @map(\"token_hash\")\n  expiresAt DateTime @map(\"expires_at\")\n  createdAt DateTime @default(now()) @map(\"created_at\")\n}\n\nenum NoteStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\nenum UserRole {\n  USER\n  REVIEWER\n  ADMIN\n}\n\nenum MediaType {\n  IMAGE\n  VIDEO\n}\n\nenum NotificationType {\n  NOTE_APPROVED\n  NOTE_REJECTED\n  NOTE_DELETED\n  COMMENT_RECEIVED\n  SYSTEM_ALERT\n}\n\nmodel Notification {\n  id              String           @id @default(uuid())\n  userId          String           @map(\"user_id\")\n  user            User             @relation(fields: [userId], references: [id])\n  type            NotificationType\n  content         String\n  relatedEntityId String?          @map(\"related_entity_id\")\n  isRead          Boolean          @default(false) @map(\"is_read\")\n  createdAt       DateTime         @default(now()) @map(\"created_at\")\n  updatedAt       DateTime         @updatedAt @map(\"updated_at\")\n}\n\nmodel CheckIn {\n  id          String   @id @default(uuid())\n  userId      String   @map(\"user_id\")\n  user        User     @relation(fields: [userId], references: [id])\n  cityName    String   @map(\"city_name\")\n  latitude    Float\n  longitude   Float\n  checkInTime DateTime @default(now()) @map(\"check_in_time\")\n\n  @@index([userId])\n}\n",
+  "inlineSchemaHash": "7a32c3a8234efdf4d634c5905f0cbf22f25e633ea5580be168377d7ac4978c54",
   "copyEngine": true
 }
 config.dirname = '/'

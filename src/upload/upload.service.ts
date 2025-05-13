@@ -27,7 +27,9 @@ export class UploadService {
   private readonly uploadDir: string;
 
   constructor(private configService: ConfigService) {
-    this.uploadDir = path.join(process.cwd(), 'uploads');
+    // this.uploadDir = path.join(process.cwd(), 'uploads');
+    this.uploadDir = this.configService.get('UPLOAD_DIR', '/opt/uploads');
+    
     if (!fs.existsSync(this.uploadDir)) {
       fs.mkdirSync(this.uploadDir, { recursive: true });
     }

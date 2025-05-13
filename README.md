@@ -2,15 +2,14 @@
 
 ## 项目简介
 
-Travel Note Server 是一个旅游游记分享应用的后端服务，基于 NestJS 框架开发，提供了完整的用户认证、游记管理和审核系统。
+本项目是一个旅游游记分享应用的后端服务，基于 NestJS 框架开发，提供了完整的用户认证、游记管理和审核系统。
 
 ## 技术栈
 
 - NestJS
 - Prisma ORM
 - TypeScript
-- JWT 认证
-- bcrypt 密码加密
+- bcryptjs密码加密
 
 ## 已实现功能
 
@@ -18,13 +17,13 @@ Travel Note Server 是一个旅游游记分享应用的后端服务，基于 Nes
 - 用户注册
 - 用户登录
 - 用户登出
+- JWT认证机制
 - 三种用户角色：USER, REVIEWER, ADMIN
-- JWT 认证机制
 
 ### 2. 游记管理
 - 创建游记
 - 更新游记
-- 删除游记
+- 删除游记（物理删除）
 - 游记状态管理（PENDING, APPROVED, REJECTED）
 - 游记列表查询
 - 支持日期范围和关键词搜索
@@ -33,32 +32,37 @@ Travel Note Server 是一个旅游游记分享应用的后端服务，基于 Nes
 ### 3. 审核系统
 - 审核员和管理员可审核游记
 - 批准或拒绝游记
-- 添加拒绝原因
+- 管理员可删除游记（逻辑删除）
 
-### 4. 安全特性
-- JWT 认证
-- 密码 bcrypt 加密
+### 4. 文件上传
+- 图片和视频上传
+- 视频上传时生成缩略图
+
+### 5. 安全特性
+- JWT认证
+- 密码bcrypt加密
 - 请求限流
+- 详细的输入校验
 - 数据验证拦截器
 - 角色权限控制
+- HTTPS安全加密
 
 ## 待完成功能
 
-- [ ] 微信分享功能
-- [ ] 性能优化
+- [ ] 微信分享功能（API_KEY暂无）
 - [ ] 更详细的用户统计和分析
 
-## 运行环境要求
+## 本地开发
+
+### 前置条件
 
 - Node.js 18+
 - pnpm
 
-## 本地开发
-
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/your-username/travel-note-server.git
+git clone https://github.com/MinerNobo/travel-note-server.git
 cd travel-note-server
 ```
 
@@ -84,19 +88,6 @@ pnpm prisma migrate dev
 pnpm run start:dev
 ```
 
-## 测试
-
-### 运行单元测试
-
-```bash
-pnpm run test
-```
-
-### 运行测试覆盖率
-
-```bash
-pnpm run test:cov
-```
 
 ## 部署
 
@@ -104,18 +95,12 @@ pnpm run test:cov
 
 ```bash
 pnpm run build
-pnpm run start:prod
+pm2 restart your_app_name
 ```
 
-## 贡献指南
-
-1. Fork 仓库
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交代码 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 提交 Pull Request
 
 ## 联系方式
 
-项目负责人 - [MinerNobo]
-项目链接: [https://github.com/MinerNobo/travel-note-server]
+项目负责人: [戴亮(MinerNobo)](https://github.com/MinerNobo/travel-note-server)
+
+电子邮箱：3313976380@qq.com

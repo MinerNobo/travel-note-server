@@ -3,7 +3,6 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import helmet from 'helmet';
-import { join } from 'path';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
@@ -34,18 +33,26 @@ async function bootstrap() {
   app.useWebSocketAdapter(new IoAdapter(app));
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: [
+        'http://localhost:5173', 
+        'https://moruka.top',
+        'http://moruka.top',
+        'http://124.71.204.101',
+        'https://124.71.204.101',
+      process.env.FRONTEND_URL ?? ''
+    ].filter(Boolean) as string[],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type', 
+      'Authorization', 
+      'X-Requested-With',
+      'Accept',
+      'Origin'
+    ],
     credentials: true,
-  });
-
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-    prefix: '/uploads/',
-    setHeaders: (res, path) => {
-      res.set('Access-Control-Allow-Origin', '*');
-      res.set('Cache-Control', 'public, max-age=86400');
-    },
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    exposedHeaders: ['Content-Type', 'Authorization']
   });
 
   app.useGlobalPipes(
@@ -71,6 +78,8 @@ async function bootstrap() {
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.useGlobalInterceptors(new DataValidationInterceptor());
+
+  app.setGlobalPrefix('api');
 
   await app.listen(process.env.PORT ?? 40000);
 }

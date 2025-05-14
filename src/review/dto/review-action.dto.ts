@@ -13,7 +13,4 @@ export class RejectReviewDto {
   @IsNotEmpty({ message: '拒绝理由不能为空' })
   @IsOptional()
   rejectReason: string;
-
-  @IsEnum(NoteStatus, { message: '无效的笔记状态' })
-  status: NoteStatus;
 }

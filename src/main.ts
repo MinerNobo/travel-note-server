@@ -61,19 +61,23 @@ async function bootstrap() {
       forbidNonWhitelisted: false,
       transform: true,
       exceptionFactory: (errors) => {
-        const formattedErrors = errors.map((error) => ({
-          field: error.property,
-          constraints: Object.values(error.constraints || {}),
-        }));
+        const firstError = errors[0];
+        const firstConstraint = Object.values(firstError.constraints || {})[0];
 
         return new BadRequestException({
           statusCode: 400,
-          message: '参数验证失败',
-          errors: formattedErrors,
+          timestamp: new Date().toISOString(),
+          path: '',
+          message: firstConstraint || '参数验证失败',
+          errorDetails: errors.map((error) => ({
+            field: error.property,
+            message: Object.values(error.constraints || {})[0],
+          })),
         });
       },
     }),
   );
+
 
   app.useGlobalFilters(new GlobalExceptionFilter());
 

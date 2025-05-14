@@ -306,11 +306,12 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://nobo:Bc83720%40%40!@localhost:3306/travel_note_db"
+        "value": null
       }
     }
   },

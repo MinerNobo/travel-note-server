@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { ThrottlerModule} from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { CustomThrottlerGuard } from './custom-throttler.guard';
 
@@ -8,11 +8,11 @@ import { CustomThrottlerGuard } from './custom-throttler.guard';
     ThrottlerModule.forRoot({
       throttlers: [
         {
-          ttl: 60 * 1000,
+          ttl: 60,
           limit: 10,
         },
         {
-          ttl: 60 * 60 * 1000,
+          ttl: 60 * 60,
           limit: 100,
         },
       ],
@@ -22,7 +22,7 @@ import { CustomThrottlerGuard } from './custom-throttler.guard';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: CustomThrottlerGuard, // 使用自定义的限流守卫
+      useClass: CustomThrottlerGuard, 
     },
   ],
   exports: [ThrottlerModule],

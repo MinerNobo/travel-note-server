@@ -16,7 +16,9 @@ import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { UpdateAvatarDto } from './dto/update-avatar.dto';
 import { CatchException } from 'src/common/decorators/catch-exception.decorator';
+import { CustomThrottlerGuard } from 'src/common/throttler/custom-throttler.guard';
 
+@UseGuards(CustomThrottlerGuard)
 @Controller('auth')
 export class AuthController {
   constructor(

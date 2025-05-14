@@ -14,7 +14,9 @@ import { Throttle } from '@nestjs/throttler';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { NotesService } from './notes.service';
+import { CustomThrottlerGuard } from 'src/common/throttler/custom-throttler.guard';
 
+@UseGuards(CustomThrottlerGuard)
 @Controller('notes')
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}

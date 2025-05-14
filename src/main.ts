@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { DataValidationInterceptor } from './common/interceptors/data-validation.interceptor';
+import { CustomThrottlerGuard } from './common/throttler/custom-throttler.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

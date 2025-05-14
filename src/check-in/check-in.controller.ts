@@ -3,7 +3,9 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CatchException } from '../common/decorators/catch-exception.decorator';
 import { CheckInService } from './check-in.service';
 import { CreateCheckInDto } from './dto/create-check-in.dto';
+import { CustomThrottlerGuard } from 'src/common/throttler/custom-throttler.guard';
 
+@UseGuards(CustomThrottlerGuard)
 @Controller('checkin')
 export class CheckInController {
   constructor(private readonly checkInService: CheckInService) {}
